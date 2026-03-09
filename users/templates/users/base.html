@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}LITRevu{% endblock %}</title>
+        {#        <link rel="stylesheet" href="{% static 'css/styles.css' %}">#}
+    </head>
+    <body>
+        <header>
+            <h1>Page de base de l'App users du projet LITRevu</h1>
+            {% include 'users/includes/navbar.html' %}
+        </header>
+
+        <main>
+            {% block content %}
+                <!-- contenu spécifique à chaque page ici.-->
+            {% endblock %}
+        </main>
+        <footer>
+            <p>&copy; 2026 LITRevu - Student OC Project</p>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,14 @@
+{% extends 'users/base.html' %}
+
+{% block title %}
+    LITRevu - Accueil
+
+    {% if user.is_authenticated %}
+        {% include 'users/includes/navbar.html' %}
+    {% endif %}
+
+{% endblock %}
+
+{% block content %}
+    <p>Cette page doit rediriger en 301 vers LoginView si l'utilisateur n'est pas connecté.</p>
+{% endblock %}
