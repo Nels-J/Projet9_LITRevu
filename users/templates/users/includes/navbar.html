@@ -3,9 +3,18 @@
         <li><a href="{% url 'users:flux' %}">Flux</a></li>
         <li><a href="{% url 'users:posts' %}">Posts</a></li>
         <li><a href="{% url 'users:abonnements' %}">Abonnements</a></li>
-        <li><form method="post" action="{% url 'users:logout' %}" style="display: inline;">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-link nav-link">Déconnexion</button>
-        </form></li>
+
+        {% if user.is_authenticated %}
+            <li>Bonjour, {{ user.get_full_name|default:user.username }} 👋</li>
+            <li>
+                <form method="post" action="{% url 'users:logout' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-link nav-link">Déconnexion</button>
+                </form>
+            </li>
+        {% else %}
+            <li><a href="{% url 'users:login' %}">Connexion</a></li>
+            <li><a href="{% url 'users:register' %}">Inscription</a></li>
+        {% endif %}
     </ul>
 </nav>

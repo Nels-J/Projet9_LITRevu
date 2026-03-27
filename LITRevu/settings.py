@@ -37,11 +37,11 @@ INSTALLED_APPS = [
     'users'
 ]
 
-AUTH_USER_MODEL = "users.User"
-
 # Authentication settings
-LOGOUT_REDIRECT_URL = "users:login"
-
+AUTH_USER_MODEL = "users.User"
+LOGIN_URL = 'users:login'  # Page par défaut si non connecté
+LOGIN_REDIRECT_URL = 'users:index'  # Redirection après connexion
+LOGOUT_REDIRECT_URL = "users:login"  # Redirection après déconnexion
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

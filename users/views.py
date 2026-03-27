@@ -8,14 +8,14 @@ from django.contrib.auth.views import(
     LogoutView as DjangoLogoutView,
 )
 from django.views.generic import TemplateView, FormView
+from django.conf import settings
 
 User = get_user_model()
 
 # Create your views here.
-class IndexView(LoginRequiredMixin, TemplateView):
-    """Page d'accueil protégée par authentification."""
+class IndexView(LoginRequiredMixin, TemplateView):  # Protégée
     template_name = 'users/index.html'
-    login_url = "users:login"
+    login_url = settings.LOGIN_URL  # Redirection si user non connecté via CONSTANTE dans settings.py
 
     def get_context_data(self, **kwargs):
         """Ajoute le nom d'utilisateur au contexte."""
@@ -32,14 +32,14 @@ class LoginView(DjangoLoginView):
 
 class LogoutView(DjangoLogoutView):
     """Déconnexion utilisateur."""
-    pass # LOGOUT_REDIRECT_URL est défini dans settings.py
+    pass # LOGOUT_REDIRECT_URL est défini dans settings.py donc rien à faire todo a vérifier avec Pablo.
 
 
 class RegisterView(FormView):
     """Inscription d'un nouvel utilisateur."""
     template_name = 'users/register.html'
     form_class = UserCreationForm
-    success_url = reverse_lazy('users:login')
+    success_url = reverse_lazy(settings.LOGIN_URL)
 
     def form_valid(self, form):
         """Crée l'utilisateur et redirige vers login."""
@@ -47,13 +47,15 @@ class RegisterView(FormView):
         return super().form_valid(form)
 
 
-class FluxView(TemplateView):
-    template_name = 'users/flux.html'  # ou votre template
+class FluxView(LoginRequiredMixin,TemplateView):
+    template_name = 'users/flux.html'
+    login_url = settings.LOGIN_URL
 
-
-class PostsView(TemplateView):
+class PostsView(LoginRequiredMixin, TemplateView):
     template_name = 'users/posts.html'
+    login_url = settings.LOGIN_URL
 
 
-class AbonnementsView(TemplateView):
+class AbonnementsView(LoginRequiredMixin, TemplateView):
     template_name = 'users/abonnements.html'
+    login_url = settings.LOGIN_URL
