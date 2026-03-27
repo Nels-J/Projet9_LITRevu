@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
@@ -7,12 +6,13 @@ from django.contrib.auth.views import(
     LoginView as DjangoLoginView,
     LogoutView as DjangoLogoutView,
 )
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView, FormView, CreateView
 from django.conf import settings
+
+from users.forms import UserCreateForm
 
 User = get_user_model()
 
-# Create your views here.
 class IndexView(LoginRequiredMixin, TemplateView):  # Protégée
     template_name = 'users/index.html'
     login_url = settings.LOGIN_URL  # Redirection si user non connecté via CONSTANTE dans settings.py
@@ -25,24 +25,20 @@ class IndexView(LoginRequiredMixin, TemplateView):  # Protégée
 
 
 class LoginView(DjangoLoginView):
-    """Connexion utilisateur."""
     template_name = 'users/login.html'
     redirect_authenticated_user = True
 
 
 class LogoutView(DjangoLogoutView):
-    """Déconnexion utilisateur."""
     pass # LOGOUT_REDIRECT_URL est défini dans settings.py donc rien à faire todo a vérifier avec Pablo.
 
 
-class RegisterView(FormView):
-    """Inscription d'un nouvel utilisateur."""
+class RegisterView(CreateView):
     template_name = 'users/register.html'
-    form_class = UserCreationForm
+    form_class = UserCreateForm
     success_url = reverse_lazy(settings.LOGIN_URL)
 
     def form_valid(self, form):
-        """Crée l'utilisateur et redirige vers login."""
         form.save()
         return super().form_valid(form)
 
@@ -50,6 +46,7 @@ class RegisterView(FormView):
 class FluxView(LoginRequiredMixin,TemplateView):
     template_name = 'users/flux.html'
     login_url = settings.LOGIN_URL
+
 
 class PostsView(LoginRequiredMixin, TemplateView):
     template_name = 'users/posts.html'
