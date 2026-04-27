@@ -1,23 +1,36 @@
+{# base.html #}
 <!DOCTYPE html>
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}LITRevu{% endblock %}</title>
-        {#        <link rel="stylesheet" href="{% static 'css/styles.css' %}">#}
+
+        {# Title par défaut pour l'application users à surcharger dans les autres gabarits enfants #}
+        <title>LITRevu{% block title %} - UNDEFINED head title{% endblock %}</title>
     </head>
     <body>
         <header>
-            <h1>Page de base de l'App users du projet LITRevu</h1>
-            {% include 'users/includes/navbar.html' %}
+            <h1>
+                Ce H1 est contenu en dur dans le fichier base.html
+            </h1>
+            <p>
+                Tout comme ce paragraphe, ils permettent de s'assurer que base.html est bien utilisé dans toutes les autres pages html du projet. Ils seront supprimés ensuite pour laisser place au contenu propre à chaque page.
+            </p>
+            {# Seul un utilisateur connecté doit accéder à la navigation #}
+            {% if user.is_authenticated %}
+                {% include 'users/includes/navbar.html' %}
+            {% endif %}
         </header>
 
         <main>
             {% block content %}
-                <!-- contenu spécifique à chaque page ici.-->
+                <!-- Si d'autres pages ont un block du meme nom, alors le contenu de celles-ci sera injecté ici pour le rendu html final -->
+                <p>UNDEFINED block content dans une des pages enfants.</p>
             {% endblock %}
         </main>
+
         <footer>
-            <p>&copy; 2026 LITRevu - Student OC Project</p>
+            <p>&lt; LITRevu - OC_student_project - 2026 &gt;</p>
         </footer>
+
     </body>
 </html>
