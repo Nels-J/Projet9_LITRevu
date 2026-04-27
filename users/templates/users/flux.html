@@ -1,6 +1,11 @@
+{# flux.html #}
 {% extends 'users/base.html' %}
 
+{# Surcharge du contenu du head title de base.html #}
+{% block title %} - Flux{% endblock %}
+
+{# Surcharge du contenu du bloc "content" de base.html #}
 {% block content %}
-    <h1>Flux en construction</h1>
-    <p>Page bientôt disponible !</p>
+    <h2>Flux en construction - Page bientôt disponible !</h2>
+    <h3>Ce titre en H3 provient du gabarit flux.html (users)</h3>
 {% endblock %}
