@@ -19,7 +19,7 @@ class LoginView(DjangoLoginView):
 
 
 class LogoutView(DjangoLogoutView):
-    pass # LOGOUT_REDIRECT_URL est défini dans settings.py donc rien à faire todo a vérifier avec Pablo.
+    pass
 
 
 class RegisterView(CreateView):
