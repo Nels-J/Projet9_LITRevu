@@ -1,11 +1,17 @@
 {% extends 'users/base.html' %}
 
-{# Mise à jour du title de base #}
-{% block title %} - login{% endblock %}
+{# Surcharge du contenu du head title de base.html #}
+{% block title %} - LogIn{% endblock %}
 
+{# Surcharge du contenu du bloc "content" de base.html #}
 {% block content %}
+    <div>
+        <h2>Inscrivez-vous maintenant</h2>
+        <a href="{% url 'register' %}" class="btn-register">S'inscrire</a>
+    </div>
+
     <section class="auth-container">
-        <h1>Se connecter</h1>
+        <h2>Connectez-vous</h2>
 
         {% if form.errors %}
             <p class="error">Identifiants invalides. Veuillez réessayer.</p>
@@ -16,9 +22,9 @@
             {{ form.as_p }}
 
             <div class="auth-actions">
-                <button type="submit">Connexion</button>
-                <a href="{% url 'register' %}" class="btn-register">S'enregistrer</a>
+                <button type="submit">Se connecter</button>
             </div>
         </form>
+
     </section>
 {% endblock %}
