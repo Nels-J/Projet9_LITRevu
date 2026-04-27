@@ -13,17 +13,6 @@ from users.forms import UserCreateForm
 
 User = get_user_model()
 
-class IndexView(LoginRequiredMixin, TemplateView):  # Protégée
-    template_name = 'users/index.html'
-    login_url = settings.LOGIN_URL  # Redirection si user non connecté via CONSTANTE dans settings.py
-
-    def get_context_data(self, **kwargs):
-        """Ajoute le nom d'utilisateur au contexte."""
-        context = super().get_context_data(**kwargs)
-        context['username'] = self.request.user.username
-        return context
-
-
 class LoginView(DjangoLoginView):
     template_name = 'users/login.html'
     redirect_authenticated_user = True
