@@ -39,9 +39,9 @@ INSTALLED_APPS = [
 
 # Authentication settings
 AUTH_USER_MODEL = "users.User"
-LOGIN_URL = 'users:login'  # Page par défaut si non connecté
-LOGIN_REDIRECT_URL = 'users:index'  # Redirection après connexion
-LOGOUT_REDIRECT_URL = "users:login"  # Redirection après déconnexion
+LOGIN_URL = 'login'  # Page par défaut si non connecté
+LOGIN_REDIRECT_URL = 'flux'  # Redirection après connexion
+LOGOUT_REDIRECT_URL = 'login'  # Redirection après déconnexion
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -117,3 +117,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+APPEND_SLASH = True

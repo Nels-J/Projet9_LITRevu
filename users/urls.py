@@ -17,7 +17,6 @@ Including another URLconf
 from django.urls import path
 
 from .views import (
-    IndexView,
     LoginView,
     LogoutView,
     RegisterView,
@@ -26,13 +25,11 @@ from .views import (
     AbonnementsView,
 )
 
-app_name = 'users'
 urlpatterns = [
-    path('', IndexView.as_view(), name='index'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('register/', RegisterView.as_view(), name='register'),
-    path('flux/', FluxView.as_view(), name='flux'),
     path('posts/', PostsView.as_view(), name='posts'),
     path('abonnements/', AbonnementsView.as_view(), name='abonnements'),
+    path('', FluxView.as_view(), name='flux'),
 ]
