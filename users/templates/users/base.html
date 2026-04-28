@@ -1,11 +1,13 @@
 {# base.html #}
+{% load static %}
 <!DOCTYPE html>
-<html lang="fr">
+<html lang='fr'>
     <head>
-        <meta charset="UTF-8">
+        <meta charset='UTF-8'>
 
         {# Title par défaut pour l'application users à surcharger dans les autres gabarits enfants #}
         <title>LITRevu{% block title %} - UNDEFINED head title{% endblock %}</title>
+        <link rel='stylesheet' href="{% static 'css/style.css' %}">
     </head>
     <body>
         <header>

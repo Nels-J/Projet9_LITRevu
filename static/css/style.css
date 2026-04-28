@@ -1,0 +1,87 @@
+/* Reset léger */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+footer {
+    text-align: center;
+}
+
+/* Zone principale sous le futur bandeau (header) */
+main {
+    width: min(1200px, 100% - 2rem);
+    margin-inline: auto;
+    padding-block: 1.5rem;
+}
+
+/* ===== MOBILE (par défaut) ===== */
+.auth-page {
+    display: grid;
+    grid-template-columns: 1fr; /* signup au-dessus de signin */
+    gap: 0.75rem;               /* espace entre les 2 blocs */
+}
+
+.auth-panel {
+    padding: 1.25rem;
+}
+
+.auth-panel-signup {
+    background-color: ghostwhite;
+    text-align: center;
+}
+
+.auth-panel-signin {
+    background-color: gainsboro;
+}
+
+.auth-panel-signin h2 {
+    text-align: center;
+}
+
+/* Formulaire Django : inputs pleine largeur */
+.auth-panel-signin form p {
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 0.75rem 0;
+}
+
+.auth-panel-signin form p label {
+    margin-bottom: 0.25rem;
+}
+
+.auth-panel-signin form p input {
+    width: 100%;
+    padding: 0.4rem 0.5rem;
+    box-sizing: border-box;
+}
+
+/* Bouton du formulaire aligné à droite*/
+.auth-panel-signin .auth-actions {
+    text-align: right;
+}
+
+/* ===== TABLETTE ET + ===== */
+@media (min-width: 768px) {
+    .auth-page {
+        grid-template-columns: 1fr 1fr; /* côte à côte */
+        gap: 0;                         /* pas d'espace */
+    }
+}
+
+/* ===== XXL ===== */
+@media (min-width: 1400px) {
+    main {
+        width: min(1280px, 100% - 3rem);
+        padding-block: 2rem;
+    }
+
+    .auth-panel {
+        padding: 2rem;
+    }
+}
