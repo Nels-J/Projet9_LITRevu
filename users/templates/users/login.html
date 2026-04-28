@@ -9,7 +9,7 @@
     <div class="auth-page">
         <section class="auth-panel auth-panel-signup" aria-labelledby="signup-title">
             <h2 id="signup-title">Inscrivez-vous maintenant</h2>
-            <a href="{% url 'register' %}" class="btn-register">S'inscrire</a>
+            <a href="{% url 'register' %}" class="btn btn-secondary">S'inscrire</a>
         </section>
 
         <section class="auth-panel auth-panel-signin auth-container" aria-labelledby="signin-title">
@@ -24,7 +24,7 @@
                 {{ form.as_p }}
 
                 <div class="auth-actions">
-                    <button type="submit">Se connecter</button>
+                    <button type="submit" class="btn btn-primary">Se connecter</button>
                 </div>
             </form>
         </section>
