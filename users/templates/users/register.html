@@ -6,12 +6,64 @@
 
 {# Surcharge du contenu du bloc "content" de base.html #}
 {% block content %}
-    <p>Inscrivez-vous en remplissant le formulaire</p>
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">S'inscrire</button>
-    </form>
+    <section class="register-page" aria-labelledby="register-title">
+
+        <h2 id="register-title">Inscrivez-vous</h2>
+
+        <form method="post" class="register-form" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="form-errors-global" role="alert" aria-live="assertive">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+
+            {% for field in form %}
+                <div class="form-row">
+                    <div class="label-row">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+
+                        {% if field.help_text %}
+                            <button
+                                    type="button"
+                                    class="help-trigger"
+                                    aria-label="Aide pour {{ field.label }}"
+                            >?
+                            </button>
+                            <span class="help-tooltip">{{ field.help_text }}</span>
+                        {% endif %}
+                    </div>
+
+                    {% if field.errors %}
+                        <div class="field-control field-control-error">
+                            {{ field }}
+                        </div>
+                        <ul id="{{ field.id_for_label }}-errors" class="field-errors" role="alert">
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <div class="field-control">
+                            {{ field }}
+                        </div>
+                    {% endif %}
+
+                </div>
+            {% endfor %}
+
+            <div class="register-actions">
+                <a href="{% url 'login' %}" class="btn btn-secondary">Retourner</a>
+                <button type="submit" class="btn btn-primary">S'inscrire</button>
+            </div>
+
+        </form>
+
+    </section>
 
 {% endblock %}
