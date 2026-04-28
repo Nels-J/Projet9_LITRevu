@@ -1,17 +1,16 @@
+from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import (
     LoginView as DjangoLoginView,
     LogoutView as DjangoLogoutView,
 )
-from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView
 
-from settings import LOGIN_REDIRECT_URL
 from users.forms import UserCreateForm
 
 User = get_user_model()
+
 
 class LoginView(DjangoLoginView):
     template_name = 'users/login.html'
@@ -25,7 +24,7 @@ class LogoutView(DjangoLogoutView):
 class RegisterView(CreateView):
     template_name = 'users/register.html'
     form_class = UserCreateForm
-    success_url = reverse_lazy(LOGIN_REDIRECT_URL)
+    success_url = settings.LOGIN_REDIRECT_URL
 
     def form_valid(self, form):
         form.save()
