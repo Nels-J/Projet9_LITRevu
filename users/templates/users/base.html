@@ -11,16 +11,19 @@
     </head>
     <body>
         <header>
-            <h1>
-                Ce H1 est contenu en dur dans le fichier base.html
-            </h1>
-            <p>
-                Tout comme ce paragraphe, ils permettent de s'assurer que base.html est bien utilisé dans toutes les autres pages html du projet. Ils seront supprimés ensuite pour laisser place au contenu propre à chaque page.
-            </p>
+            {# Message d'accueil de l'utilisateur connecté #}
+            {% if user.is_authenticated %}
+                <span class="header-greeting">👋 Bonjour, {{ user.get_full_name|default:user.username }}</span>
+            {% endif %}
+
+            {# Nom du site #}
+            <h1>LITRevu</h1> <!-- fixme dynamique ??? -->
+
             {# Seul un utilisateur connecté doit accéder à la navigation #}
             {% if user.is_authenticated %}
                 {% include 'users/includes/navbar.html' %}
             {% endif %}
+
         </header>
 
         <main>

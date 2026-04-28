@@ -1,12 +1,20 @@
-/* Reset léger */
+/* Reset browser css */
 *,
 *::before,
-*::after {
+*::after,
+button,
+input,
+select,
+textarea {
     box-sizing: border-box;
+    font-family: inherit; /* force l'héritage de la police du body */
+    font-size: inherit;   /* idem pour la taille */
 }
 
 body {
     margin: 0;
+    font-family: "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    line-height: 1.5;
 }
 
 footer {
@@ -84,4 +92,73 @@ main {
     .auth-panel {
         padding: 2rem;
     }
+}
+
+/* ===== HEADER / BANDEAU FULL-WIDTH ===== */
+header {
+    width: 100%;
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+}
+
+/* Titre centré (colonne du milieu) */
+header h1 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #fff;
+    text-align: center;
+    grid-column: 2;
+}
+
+/* Navbar en colonne 3 (droite) */
+header nav {
+    grid-column: 3;
+    display: flex;
+    justify-content: flex-end;
+}
+
+header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+header nav ul li {
+    display: flex;
+    align-items: center;
+}
+
+header nav ul li a,
+header nav ul li span {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+header nav ul li a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+/* Bouton déconnexion */
+header nav .btn-link {
+    background: none;
+    border: none;
+    color: #ecf0f1;
+    font-size: 0.95rem;
+    cursor: pointer;
+    padding: 0;
+}
+
+header nav .btn-link:hover {
+    color: #fff;
+    text-decoration: underline;
 }
