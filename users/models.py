@@ -16,6 +16,9 @@ class Ticket(models.Model):
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     time_created = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['-time_created']
+
     def __str__(self):
         return f"{self.title} - {self.description} - by: {self.user}"
 
@@ -34,6 +37,15 @@ class Review(models.Model):
             to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
     )
     time_created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-time_created']
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'ticket'],
+                name='unique_user_review_per_ticket',
+            ),
+        ]
 
     def __str__(self):
         return f"{self.headline} - {self.rating} - by: {self.user}"
