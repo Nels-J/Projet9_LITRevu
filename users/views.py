@@ -8,6 +8,7 @@ from django.contrib.auth.views import (
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView
 
+from settings import LOGIN_REDIRECT_URL
 from users.forms import UserCreateForm
 
 User = get_user_model()
@@ -24,7 +25,7 @@ class LogoutView(DjangoLogoutView):
 class RegisterView(CreateView):
     template_name = 'users/register.html'
     form_class = UserCreateForm
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy(LOGIN_REDIRECT_URL)
 
     def form_valid(self, form):
         form.save()
