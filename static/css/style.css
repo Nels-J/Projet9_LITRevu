@@ -24,7 +24,7 @@ body {
     margin: 0;
     background-color: var(--c-light);
     color: var(--c-dark);
-    font-family: "Georgia", "Times New Roman", serif;
+    font-family: "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
     line-height: 1.6;
 }
 
