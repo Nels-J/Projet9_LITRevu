@@ -12,11 +12,11 @@
             <a href="{% url 'register' %}" class="btn btn-secondary">S'inscrire</a>
         </section>
 
-        <section class="auth-panel auth-panel-signin auth-container" aria-labelledby="signin-title">
+        <section class="auth-panel auth-panel-signin" aria-labelledby="signin-title">
             <h2 id="signin-title">Connectez-vous</h2>
 
             {% if form.errors %}
-                <p class="error">Identifiants invalides. Veuillez réessayer.</p>
+                <p class="field-errors">Identifiants invalides. Veuillez réessayer.</p>
             {% endif %}
 
             <form method="post">
