@@ -1,3 +1,5 @@
+from itertools import chain
+
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,6 +10,7 @@ from django.contrib.auth.views import (
 from django.views.generic import TemplateView, CreateView
 
 from users.forms import UserCreateForm
+from users.models import Ticket, Review
 
 User = get_user_model()
 
@@ -44,6 +47,23 @@ class FluxView(LoginRequiredMixin, TemplateView):
 class PostsView(LoginRequiredMixin, TemplateView):
     template_name = 'users/posts.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # QuerySet des tickets et reviews de l'utilisateur connecté
+        tickets = Ticket.objects.filter(user=self.request.user)
+        tickets_reviews = Review.objects.filter(user=self.request.user).select_related('ticket')
+
+        # Combinaison tickets & reviews triés.
+        posts = sorted(
+                # chain combiner les deux QuerySet en une seule séquence itérable
+                chain(tickets, tickets_reviews),
+                key=lambda post: post.time_created,  # clé de tri.
+                reverse=True  # inverse le tri (+ récent en premier)
+        )
+
+        context['posts'] = posts
+        return context
 
 class AbonnementsView(LoginRequiredMixin, TemplateView):
     template_name = 'users/abonnements.html'

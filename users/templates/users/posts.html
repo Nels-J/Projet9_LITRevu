@@ -6,6 +6,39 @@
 
 {# Surcharge du contenu du bloc "content" de base.html #}
 {% block content %}
-    <h2>Posts en construction - Page bientôt disponible !</h2>
-    <h3>Ce titre en H3 provient du gabarit posts.html (users)</h3>
+
+    <h2>Mes posts</h2>
+    <h3>Posts en construction - Page bientôt disponible !</h3>
+    <h4>Ce titre en H4 provient du gabarit posts.html (users)</h4>
+
+    {% if posts %}
+        {% for post in posts %}
+            <article style="border:1px solid #ccc; padding:12px; margin:12px 0;">
+                <small>{{ post.time_created|date:"d/m/Y H:i" }}</small>
+
+                {% if post.ticket %}
+                    {# Review #}
+                    <h2>Review: {{ post.headline }}</h2>
+                    <p>Note: {{ post.rating }}/5</p>
+                    <p>Sur le ticket: {{ post.ticket.title }}</p>
+
+                    {% if post.body %}
+                        <p>{{ post.body }}</p>
+                    {% endif %}
+
+                {% else %}
+                    {# Ticket #}
+                    <h2>Ticket: {{ post.title }}</h2>
+                    {% if post.description %}
+                        <p>{{ post.description }}</p>
+                    {% endif %}
+
+                {% endif %}
+            </article>
+        {% endfor %}
+
+    {% else %}
+        <p>Aucun post pour le moment.</p>
+    {% endif %}
+
 {% endblock %}
