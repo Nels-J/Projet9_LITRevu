@@ -27,7 +27,7 @@ class LogoutView(DjangoLogoutView):
 class RegisterView(CreateView):
     template_name = 'users/register.html'
     form_class = UserCreateForm
-    success_url = settings.LOGIN_REDIRECT_URL
+    success_url = reverse_lazy(settings.LOGIN_REDIRECT_URL)
 
     def form_valid(self, form):
         form.save()
