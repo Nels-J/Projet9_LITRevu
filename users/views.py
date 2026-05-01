@@ -7,7 +7,8 @@ from django.contrib.auth.views import (
     LoginView as DjangoLoginView,
     LogoutView as DjangoLogoutView,
 )
-from django.views.generic import TemplateView, CreateView
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, CreateView, ListView
 
 from users.forms import UserCreateForm
 from users.models import Ticket, Review
@@ -44,18 +45,18 @@ class FluxView(LoginRequiredMixin, TemplateView):
     template_name = 'users/flux.html'
 
 
-class PostsView(LoginRequiredMixin, TemplateView):
+class PostsView(LoginRequiredMixin, ListView):
     template_name = 'users/posts.html'
+    context_object_name = 'posts'  # Renomme le contexte pour accéder aux posts dans le template
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+    def get_queryset(self):
 
         # QuerySet des tickets et reviews de l'utilisateur connecté
         tickets = Ticket.objects.filter(user=self.request.user)
         tickets_reviews = Review.objects.filter(user=self.request.user).select_related('ticket')
 
         # Combinaison tickets & reviews triés.
-        posts = sorted(
+        return sorted(
                 # chain combiner les deux QuerySet en une seule séquence itérable
                 chain(tickets, tickets_reviews),
                 key=lambda post: post.time_created,  # clé de tri.
