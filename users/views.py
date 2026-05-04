@@ -10,8 +10,8 @@ from django.contrib.auth.views import (
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, ListView
 
-from users.forms import UserCreateForm
-from users.models import Ticket, Review
+from users.forms import UserCreateForm, FollowUserForm
+from users.models import Ticket, Review, UserFollows
 
 User = get_user_model()
 
@@ -36,12 +36,6 @@ class RegisterView(CreateView):
 
 
 class FluxView(LoginRequiredMixin, TemplateView):
-    ''' Affiche les posts des utilisateurs à l'utilisateur connecté.
-        LoginRequiredMixin : Assure que l'utilisateur est connecté pour accéder à la vue définie par template_name.
-        Sinon, redirection vers la page de connexion à l'aide de la constante LOGIN_URL défini dans settings.py
-        TemplateView : Affiche un template HTML.
-        template_name : Spécifie le template à utiliser pour afficher la vue.
-    '''
     template_name = 'users/flux.html'
 
 
@@ -50,7 +44,6 @@ class PostsView(LoginRequiredMixin, ListView):
     context_object_name = 'posts'  # Renomme le contexte pour accéder aux posts dans le template
 
     def get_queryset(self):
-
         # QuerySet des tickets et reviews de l'utilisateur connecté
         tickets = Ticket.objects.filter(user=self.request.user)
         tickets_reviews = Review.objects.filter(user=self.request.user).select_related('ticket')
@@ -60,11 +53,23 @@ class PostsView(LoginRequiredMixin, ListView):
                 # chain combiner les deux QuerySet en une seule séquence itérable
                 chain(tickets, tickets_reviews),
                 key=lambda post: post.time_created,  # clé de tri.
-                reverse=True  # inverse le tri (+ récent en premier)
+                reverse=True,  # inverse le tri (+ récent en premier)
         )
 
-        context['posts'] = posts
-        return context
 
-class AbonnementsView(LoginRequiredMixin, TemplateView):
+class AbonnementsView(LoginRequiredMixin, CreateView):
     template_name = 'users/abonnements.html'
+    form_class = FollowUserForm
+    success_url = reverse_lazy('abonnements')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user  # utilisateur connecté (A)
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        """Ajoute les listes d'abonnements et d'abonnés au contexte pour le template."""
+        context = super().get_context_data(**kwargs)
+        context['following'] = UserFollows.objects.filter(user=self.request.user).select_related('followed_user')
+        context['followers'] = UserFollows.objects.filter(followed_user=self.request.user).select_related('user')
+        return context

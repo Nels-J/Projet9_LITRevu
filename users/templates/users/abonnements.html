@@ -6,6 +6,21 @@
 
 {# Surcharge du contenu du bloc "content" de base.html #}
 {% block content %}
-    <h2>Abonnements en construction - Page bientôt disponible !</h2>
-    <h3>Ce titre en H3 provient du gabarit abonnements.html (users)</h3>
+    <h3>Abonnements en construction - Page bientôt disponible ! Ce titre en H3 provient du gabarit abonnements.html (users)</h3>
+
+    <h2>Suivre d'autres utilisateurs</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div>
+            {{ form.username.label_tag }}
+            {{ form.username }}
+            {{ form.username.errors }}
+        </div>
+        <button type="submit">Suivre</button>
+    </form>
+
+    <hr>
+
 {% endblock %}
