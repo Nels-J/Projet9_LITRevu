@@ -13,6 +13,7 @@
     <form method="post">
         {% csrf_token %}
         {{ form.non_field_errors }}
+
         <div>
             {{ form.username.label_tag }}
             {{ form.username }}
@@ -23,4 +24,46 @@
 
     <hr>
 
-{% endblock %}
+    <h3>Abonnements</h3>
+        {% if following %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Utilisateur suivi</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for follow in following %}
+                        <tr>
+                            <td>{{ follow.followed_user.username }}</td>
+                            <td>
+                                <!-- URL unfollow -->
+                                <button type="button" disabled>Se désabonner</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        {% else %}
+            <p>Vous ne suivez encore personne.</p>
+
+        {% endif %}
+
+    <hr>
+
+    <h3>Abonnés</h3>
+        {% if followers %}
+            <ul>
+                {% for follow in followers %}
+                    <li>{{ follow.user.username }}</li>
+                {% endfor %}
+            </ul>
+
+        {% else %}
+            <p>Aucun utilisateur ne vous suit pour le moment.</p>
+
+        {% endif %}
+
+{% endblock %}s
