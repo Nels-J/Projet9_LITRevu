@@ -16,10 +16,12 @@
             <form method="post" class="follow-form">
                 {% csrf_token %}
                 {{ form.non_field_errors }}
+                <label for="{{ form.username.id_for_label }}" class="follow-label">
+                    {{ form.username.label }}
+                </label>
 
                 <div class="follow-row">
                     <div class="follow-input-wrap">
-                        {{ form.username.label_tag }}
                         {{ form.username }}
                         {{ form.username.errors }}
                     </div>

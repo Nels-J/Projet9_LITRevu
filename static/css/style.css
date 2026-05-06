@@ -346,21 +346,32 @@ header nav .btn-link:hover {
     margin-bottom: 1rem;
 }
 
+.follow-label {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-weight: 600;
+}
+
 /* Conteneur du champ + bouton sur la même ligne */
 .follow-row {
-    display: flex;           /* active le mode flexbox : enfants sur une ligne */
-    align-items: center;     /* aligne verticalement au centre champ et bouton */
-    gap: 0.75rem;            /* espace entre le champ et le bouton */
+    display: grid;
+    grid-template-columns: 1fr auto;  /* 70% + compacte comme la table */
+    gap: 0.75rem;
 }
 
-/* Conteneur du champ texte : occupe tout l'espace disponible */
-.follow-input-wrap {
-    flex: 1;
-}
-
-/* Le champ texte occupe toute la largeur de son conteneur */
 .follow-input-wrap input {
     width: 100%;
+    height: 2.25rem;        /* hauteur fixe pour alignement visuel */
+    padding: 0 0.65rem;
+    border: 1px solid var(--c-mid);
+    border-radius: 4px;
+    background: #fff;
+}
+
+.follow-submit {
+    height: 2.25rem;        /* même hauteur que l'input */
+    padding: 0 0.85rem;     /* harmonise avec le reste */
+    white-space: nowrap;
 }
 
 /* Style général des deux tables (abonnements et abonnés) */
