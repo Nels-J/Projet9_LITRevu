@@ -6,64 +6,70 @@
 
 {# Surcharge du contenu du bloc "content" de base.html #}
 {% block content %}
-    <h3>Abonnements en construction - Page bientôt disponible ! Ce titre en H3 provient du gabarit abonnements.html (users)</h3>
 
-    <h2>Suivre d'autres utilisateurs</h2>
+    <div class="abonnements-page">
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.non_field_errors }}
+        <section class="abonnements-panel" aria-labelledby="follow-title">
 
-        <div>
-            {{ form.username.label_tag }}
-            {{ form.username }}
-            {{ form.username.errors }}
-        </div>
-        <button type="submit">Suivre</button>
-    </form>
+            <h2 id="follow-title" class="centered-title">Suivre d'autres utilisateurs</h2>
 
-    <hr>
+            <form method="post" class="follow-form">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
 
-    <h3>Abonnements</h3>
-        {% if following %}
-            <table>
-                <thead>
-                    <tr>
-                        <th>Utilisateur suivi</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for follow in following %}
-                        <tr>
-                            <td>{{ follow.followed_user.username }}</td>
-                            <td>
-                                <!-- URL unfollow -->
-                                <button type="button" disabled>Se désabonner</button>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                <div class="follow-row">
+                    <div class="follow-input-wrap">
+                        {{ form.username.label_tag }}
+                        {{ form.username }}
+                        {{ form.username.errors }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Suivre</button>
+                </div>
+            </form>
 
-        {% else %}
-            <p>Vous ne suivez encore personne.</p>
+            <hr>
 
-        {% endif %}
+            <h2 class="centered-title">Abonnements</h2>
 
-    <hr>
+                {% if following %}
+                    <table class="abonnement-table">
+                        <tbody>
+                            {% for follow in following %}
+                                <tr>
+                                    <td class="cell-user">{{ follow.followed_user.username }}</td>
+                                    <td class="cell-action">
+                                        <!-- URL unfollow -->
+                                        <button type="button" class="btn btn-secondary" disabled>Se désabonner</button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
 
-    <h3>Abonnés</h3>
-        {% if followers %}
-            <ul>
-                {% for follow in followers %}
-                    <li>{{ follow.user.username }}</li>
-                {% endfor %}
-            </ul>
+                {% else %}
+                    <p class="empty-state">Vous ne suivez encore personne.</p>
+                {% endif %}
 
-        {% else %}
-            <p>Aucun utilisateur ne vous suit pour le moment.</p>
+            <hr>
 
-        {% endif %}
+            <h2 class="centered-title">Abonnés</h2>
+                {% if followers %}
+                    <table class="abonnement-table">
+                        <tbody>
+                            {% for follow in followers %}
+                            <tr>
+                                <td class="cell-user">
+                                    {{ follow.user.username }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
 
-{% endblock %}s
+                {% else %}
+                    <p class="empty-state">Aucun utilisateur ne vous suit pour le moment.</p>
+
+                {% endif %}
+        </section>
+    </div>
+{% endblock %}

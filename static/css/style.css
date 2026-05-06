@@ -7,7 +7,8 @@
     --c-error: #8b2020; /* erreurs uniquement               */
 }
 
-/* ===== Reset ===== */
+
+/* ===== Reset des navigateurs ===== */
 *,
 *::before,
 *::after,
@@ -35,12 +36,14 @@ footer {
     font-size: 0.9rem;
 }
 
+
 /* ===== MAIN ===== */
 main {
     width: min(1200px, 100% - 2rem);
     margin-inline: auto;
     padding-block: 1.5rem;
 }
+
 
 /* ===== HEADER ===== */
 header {
@@ -107,6 +110,7 @@ header nav .btn-link:hover {
     text-decoration: underline;
 }
 
+
 /* ===== AUTH page (login) ===== */
 .auth-page {
     display: grid;
@@ -170,6 +174,7 @@ header nav .btn-link:hover {
         padding: 2rem;
     }
 }
+
 
 /* ===== Register page ===== */
 .register-page {
@@ -311,4 +316,78 @@ header nav .btn-link:hover {
 .btn-primary:hover {
     background: var(--c-mid);
     border-color: var(--c-mid);
+}
+
+
+/* ===== Abonnements page ===== */
+.abonnements-page {
+    max-width: 800px;
+    margin-inline: auto;
+}
+
+.abonnements-panel {
+    padding: 1.25rem;
+    background-color: var(--c-paper);
+}
+
+@media (min-width: 1400px) {
+    .abonnements-panel {
+        padding: 2rem;
+    }
+}
+
+.centered-title {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* Espace sous le formulaire pour ne pas coller à la ligne hr */
+.follow-form {
+    margin-bottom: 1rem;
+}
+
+/* Conteneur du champ + bouton sur la même ligne */
+.follow-row {
+    display: flex;           /* active le mode flexbox : enfants sur une ligne */
+    align-items: center;     /* aligne verticalement au centre champ et bouton */
+    gap: 0.75rem;            /* espace entre le champ et le bouton */
+}
+
+/* Conteneur du champ texte : occupe tout l'espace disponible */
+.follow-input-wrap {
+    flex: 1;
+}
+
+/* Le champ texte occupe toute la largeur de son conteneur */
+.follow-input-wrap input {
+    width: 100%;
+}
+
+/* Style général des deux tables (abonnements et abonnés) */
+.abonnement-table {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+/* Style des cellules de chaque ligne */
+.abonnement-table td {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    border: 1px solid rgba(122, 111, 94, 0.35);
+    border-radius: 4px;
+}
+
+/* Colonne de droite : action  */
+.abonnement-table .cell-action {
+    padding: 0;
+    border: none;
+    width: 1%;
+    white-space: nowrap;
+    text-align: right;
+}
+
+/* Style du texte "Vous ne suivez encore personne." */
+.empty-state {
+    color: var(--c-mid);
+    font-style: italic;
 }
