@@ -98,6 +98,15 @@ header nav ul li a:hover {
     text-decoration: underline;
 }
 
+header nav ul li.is-active a {
+    font-weight: 600;
+    background-color: var(--c-paper);
+    border: 1px solid var(--c-border-light);
+    border-radius: 999px;
+    padding: 0.2rem 0.6rem;
+    text-decoration: none;
+}
+
 header nav .btn-link {
     background: none;
     border: none;
