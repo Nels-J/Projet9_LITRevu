@@ -20,13 +20,19 @@
                     {{ form.username.label }}
                 </label>
 
-                <div class="follow-row">
-                    <div class="follow-input-wrap">
-                        {{ form.username }}
-                        {{ form.username.errors }}
-                    </div>
-                    <button type="submit" class="btn btn-primary">Suivre</button>
-                </div>
+                <table class="follow-table">
+                    <tbody>
+                        <tr>
+                            <td class="cell-user">
+                                {{ form.username }}
+                                {{ form.username.errors }}
+                            </td>
+                            <td class="cell-action">
+                                <button type="submit" class="btn btn-primary">Suivre</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </form>
 
             <hr>
@@ -59,11 +65,11 @@
                     <table class="abonnement-table">
                         <tbody>
                             {% for follow in followers %}
-                            <tr>
-                                <td class="cell-user">
-                                    {{ follow.user.username }}
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td class="cell-user">
+                                        {{ follow.user.username }}
+                                    </td>
+                                </tr>
                             {% endfor %}
                         </tbody>
                     </table>
