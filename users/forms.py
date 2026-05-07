@@ -10,7 +10,15 @@ class UserCreateForm(UserCreationForm):
 
 
 class FollowUserForm(forms.ModelForm):
-    username = forms.CharField(max_length=150, label="Nom d'utilisateur à suivre")
+    username = forms.CharField(
+            max_length=150,
+            label="Nom d'utilisateur à suivre",
+            widget=forms.TextInput(
+                    attrs={
+                            "placeholder": "Nom d'utilisateur",
+                    },
+            ),
+    )
 
     class Meta:
         model = UserFollows
@@ -43,7 +51,9 @@ class FollowUserForm(forms.ModelForm):
         if self._followed_user is None:
             raise ValueError("FollowUserForm.save() appelé sans validation préalable (is_valid()).")
 
-        instance = super().save(commit=False)  # ne sauvegarde pas immédiatement permet d'assigner les champs user et followed_user
+        instance = super().save(
+                commit=False,
+        )  # ne sauvegarde pas immédiatement permet d'assigner les champs user et followed_user
         instance.user = self.user
         instance.followed_user = self._followed_user
         if commit:  # Si commit est True, alors on sauvegarde l'instance dans la base de données
