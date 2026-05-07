@@ -354,19 +354,22 @@ header nav .btn-link:hover {
     font-weight: 400;
 }
 
-.follow-table {
+/* Tables (follow + abonnements + abonnés) */
+.follow-table,
+.abonnement-table {
     width: 100%;
-    border-collapse: collapse;
     margin-bottom: 1rem;
 }
 
-.follow-table td {
-    padding-right: 0.75rem;              /* masquer padding de la td */
-    border: none;            /* masquer bordure de la td */
-    border-radius: 0;
+/* Cellules commune */
+.follow-table td,
+.abonnement-table td {
+    border-radius: 4px;
 }
 
-.follow-table .cell-user {
+/* Cellule utilisateur (gauche, texte/input) */
+.follow-table .cell-user,
+.abonnement-table .cell-user {
     width: 100%;
 }
 
@@ -378,40 +381,29 @@ header nav .btn-link:hover {
     background: var(--c-light);
 }
 
-.follow-table .cell-action {
-    padding: 0;
-    border: none;
-    width: 1%;
-    white-space: nowrap;
-    text-align: right;
-}
-
-.follow-table .btn-primary {
-    display: inline-block;
-}
-
-
-/* Style général des deux tables (abonnements et abonnés) */
-.abonnement-table {
-    width: 100%;
-    margin-bottom: 1rem;
-}
-
-/* Style des cellules de chaque ligne */
-.abonnement-table td {
+.abonnement-table .cell-user {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
     border: 1px solid var(--c-border-light);
-    border-radius: 4px;
 }
 
-/* Colonne de droite : action  */
+/* Cellule action (droite, bouton) */
+.follow-table .cell-action,
 .abonnement-table .cell-action {
     padding: 0;
     border: none;
     width: 1%;
     white-space: nowrap;
     text-align: right;
+}
+
+/* Spécificités pour follow-table */
+.follow-table td {
+    border: none;
+}
+
+.follow-table .btn-primary {
+    display: inline-block;
 }
 
 /* Style du texte "Vous ne suivez encore personne." */
