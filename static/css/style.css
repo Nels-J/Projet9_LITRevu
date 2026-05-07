@@ -406,6 +406,13 @@ header nav .btn-link:hover {
     text-align: right;
 }
 
+/* Spécificités pour abonnement-table cellule (désabonnement) du form */
+.abonnement-table .cell-action form {
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+}
+
 /* Spécificités pour follow-table */
 .follow-table td {
     border: none;
