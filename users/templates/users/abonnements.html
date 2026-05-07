@@ -22,15 +22,12 @@
 
                 <table class="follow-table">
                     <tbody>
-                        <tr>
-                            <td class="cell-user">
-                                {{ form.username }}
-                                {{ form.username.errors }}
-                            </td>
-                            <td class="cell-action">
-                                <button type="submit" class="btn btn-primary">Suivre</button>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td class="cell-user">{{ form.username }}{{ form.username.errors }}</td>
+                        <td class="cell-action">
+                            <button type="submit" class="btn btn-primary">Suivre</button>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </form>
@@ -39,45 +36,44 @@
 
             <h2 class="centered-title">Abonnements</h2>
 
-                {% if following %}
-                    <table class="abonnement-table">
-                        <tbody>
-                            {% for follow in following %}
-                                <tr>
-                                    <td class="cell-user">{{ follow.followed_user.username }}</td>
-                                    <td class="cell-action">
-                                        <!-- URL unfollow -->
-                                        <button type="button" class="btn btn-secondary" disabled>Se désabonner</button>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-
-                {% else %}
-                    <p class="empty-state">Vous ne suivez encore personne.</p>
-                {% endif %}
+            {% if following %}
+                <table class="abonnement-table">
+                    <tbody>
+                    {% for follow in following %}
+                        <tr>
+                            <td class="cell-user">{{ follow.followed_user.username }}</td>
+                            <td class="cell-action">
+                                <form method="post" action="{% url 'unfollow' follow.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-secondary">Se désabonner</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="empty-state">Vous ne suivez encore personne.</p>
+            {% endif %}
 
             <hr>
 
             <h2 class="centered-title">Abonnés</h2>
-                {% if followers %}
-                    <table class="abonnement-table">
-                        <tbody>
-                            {% for follow in followers %}
-                                <tr>
-                                    <td class="cell-user">
-                                        {{ follow.user.username }}
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+            {% if followers %}
+                <table class="abonnement-table">
+                    <tbody>
+                    {% for follow in followers %}
+                        <tr>
+                            <td class="cell-user">{{ follow.user.username }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
 
-                {% else %}
-                    <p class="empty-state">Aucun utilisateur ne vous suit pour le moment.</p>
+            {% else %}
+                <p class="empty-state">Aucun utilisateur ne vous suit pour le moment.</p>
 
-                {% endif %}
+            {% endif %}
         </section>
     </div>
 {% endblock %}

@@ -8,7 +8,7 @@ from django.contrib.auth.views import (
     LogoutView as DjangoLogoutView,
 )
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, CreateView, ListView
+from django.views.generic import TemplateView, CreateView, ListView, DeleteView
 
 from users.forms import UserCreateForm, FollowUserForm
 from users.models import Ticket, Review, UserFollows
@@ -73,3 +73,13 @@ class AbonnementsView(LoginRequiredMixin, CreateView):
         context['following'] = UserFollows.objects.filter(user=self.request.user).select_related('followed_user')
         context['followers'] = UserFollows.objects.filter(followed_user=self.request.user).select_related('user')
         return context
+
+
+class UnfollowView(LoginRequiredMixin, DeleteView):
+    model = UserFollows
+    pk_url_kwarg = 'follow_id'
+    success_url = reverse_lazy('abonnements')
+
+    def get_queryset(self):
+        # Seul un user liés à l'utilisateur connecté pourra être supprimé (sécurité par filtrage) sinon 404.
+        return UserFollows.objects.filter(user=self.request.user)

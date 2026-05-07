@@ -23,6 +23,7 @@ from .views import (
     FluxView,
     PostsView,
     AbonnementsView,
+    UnfollowView,
 )
 
 urlpatterns = [
@@ -31,5 +32,6 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('posts/', PostsView.as_view(), name='posts'),
     path('abonnements/', AbonnementsView.as_view(), name='abonnements'),
+    path("abonnements/unfollow/<int:follow_id>/", UnfollowView.as_view(), name="unfollow"),
     path('', FluxView.as_view(), name='flux'),
 ]
