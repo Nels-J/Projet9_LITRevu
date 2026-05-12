@@ -12,10 +12,10 @@ class UserCreateForm(UserCreationForm):
 class FollowUserForm(forms.ModelForm):
     username = forms.CharField(
             max_length=150,
-            label="Nom d'utilisateur à suivre",
+            label="Saisir le nom de l'utilisateur que vous souhaitez suivre :",
             widget=forms.TextInput(
                     attrs={
-                            "placeholder": "Nom d'utilisateur",
+                            "placeholder": "Nom d'utilisateur à suivre",
                     },
             ),
     )
@@ -23,6 +23,10 @@ class FollowUserForm(forms.ModelForm):
     class Meta:
         model = UserFollows
         fields = []  # on n'expose pas directement user/followed_user
+        fields = [
+                "user",  # correspond à l'utilisateur connecté
+                "followed_user"  # l'utilisateur suivi (ou à suivre)
+        ]
 
     def __init__(self, *args, user=None, **kwargs):
         super().__init__(*args, **kwargs)
