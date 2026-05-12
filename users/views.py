@@ -7,6 +7,7 @@ from django.contrib.auth.views import (
     LoginView as DjangoLoginView,
     LogoutView as DjangoLogoutView,
 )
+from django.db.models import QuerySet
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, ListView, DeleteView
 
@@ -80,6 +81,8 @@ class UnfollowView(LoginRequiredMixin, DeleteView):
     pk_url_kwarg = 'follow_id'
     success_url = reverse_lazy('abonnements')
 
-    def get_queryset(self):
-        # Seul un user liés à l'utilisateur connecté pourra être supprimé (sécurité par filtrage) sinon 404.
+    def get_queryset(self) -> QuerySet:
+        """Restreint la suppression aux abonnements de l'utilisateur connecté.
+           En filtrant le queryset avec self.request.user
+        """
         return UserFollows.objects.filter(user=self.request.user)
