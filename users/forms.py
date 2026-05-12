@@ -16,6 +16,7 @@ class FollowUserForm(forms.ModelForm):
             widget=forms.TextInput(
                     attrs={
                             "placeholder": "Nom d'utilisateur à suivre",
+                            "autocomplete": "off",
                     },
             ),
     )
