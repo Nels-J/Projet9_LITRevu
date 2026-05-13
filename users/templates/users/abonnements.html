@@ -23,6 +23,7 @@
                 <table class="follow-table">
                     <tbody>
                     <tr>
+                        {# Champ de saisie unique : `username` est converti par le Form côté serveur une fois validé #}
                         <td class="cell-user">{{ form.username }}{{ form.username.errors }}</td>
                         <td class="cell-action">
                             <button type="submit" class="btn btn-primary">Suivre</button>

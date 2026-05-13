@@ -59,17 +59,31 @@ class PostsView(LoginRequiredMixin, ListView):
 
 
 class AbonnementsView(LoginRequiredMixin, CreateView):
+    """
+    Page des abonnements :
+    - GET  : affiche le formulaire + listes following/followers
+    - POST : tente de créer une relation UserFollows
+    """
     template_name = 'users/abonnements.html'
     form_class = FollowUserForm
     success_url = reverse_lazy('abonnements')
 
     def get_form_kwargs(self):
+        """
+        Injecte l'utilisateur connecté dans le formulaire.
+
+        Le formulaire l'utilise pour interdire auto-follow, pas doublons, renseigner 'user' lors du save.
+        """
         kwargs = super().get_form_kwargs()
         kwargs['user'] = self.request.user  # utilisateur connecté (A)
         return kwargs
 
     def get_context_data(self, **kwargs):
-        """Ajoute les listes d'abonnements et d'abonnés au contexte pour le template."""
+        """
+        Ajoute au contexte du template :
+        - `following` : utilisateurs suivis par l'utilisateur connecté 'request.user'
+        - `followers` : utilisateurs qui suivent l'utilisateur connecté 'request.user'
+        """
         context = super().get_context_data(**kwargs)
         context['following'] = UserFollows.objects.filter(user=self.request.user).select_related('followed_user')
         context['followers'] = UserFollows.objects.filter(followed_user=self.request.user).select_related('user')

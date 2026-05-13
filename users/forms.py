@@ -10,6 +10,16 @@ class UserCreateForm(UserCreationForm):
 
 
 class FollowUserForm(forms.ModelForm):
+    """
+    Formulaire de création d'un abonnement (UserFollows).
+
+    Le modèle stocke (persiste) deux FK :
+    - user : l'utilisateur connecté qui suit
+    - followed_user : l'utilisateur suivi
+
+    L'interface n'expose qu'un champ texte `username`.
+    Ce champ est validé puis converti en instance `User` dans `clean_username`.
+    """
     username = forms.CharField(
             max_length=150,
             label="Saisir le nom de l'utilisateur que vous souhaitez suivre :",
@@ -23,19 +33,33 @@ class FollowUserForm(forms.ModelForm):
 
     class Meta:
         model = UserFollows
-        fields = []  # on n'expose pas directement user/followed_user
         fields = [
-                "user",  # correspond à l'utilisateur connecté
-                "followed_user"  # l'utilisateur suivi (ou à suivre)
+                "user",   # utilisateur connecté (rempli côté serveur)
+                "followed_user"  # utilisateur suivi (résolu depuis username)
         ]
 
     def __init__(self, *args, user=None, **kwargs):
+        """
+        Reçoit l'utilisateur connecté via `user=...` (injecté par la vue).
+
+        Les champs FK du ModelForm sont masqués et non requis :
+        ils sont définis de manière sûre dans `save()`.
+        """
         super().__init__(*args, **kwargs)
         self.user = user
-        self._followed_user = None
+        # On masque les champs FK générés par ModelForm, ils seront remplis dans save()
+        self.fields["user"].required = False
+        self.fields["user"].widget = forms.HiddenInput()
+        self.fields["followed_user"].required = False
+        self.fields["followed_user"].widget = forms.HiddenInput()
 
-    def clean_username(self):
-        username = self.cleaned_data["username"].strip()
+    def clean_username(self) -> User:
+        """
+        Valide le pseudo saisi via le champ username et retourne l'objet User
+        - Valide si utilisateur cible existe, ne se suit pas lui même, relation n'existe pas déjà.
+        Retourne l'instance User cible (stockée dans cleaned_data["username"]).
+        """
+        username = self.cleaned_data["username"].strip()   # champs custom, gérés manuellement
 
         try:
             followed_user = User.objects.get(username=username)
@@ -48,20 +72,19 @@ class FollowUserForm(forms.ModelForm):
         if UserFollows.objects.filter(user=self.user, followed_user=followed_user).exists():
             raise forms.ValidationError("Vous suivez déjà cet utilisateur.")
 
-        self._followed_user = followed_user
+        return followed_user  # stocké dans cleaned_data["username"] (nom du champ custom)
 
-        return username
+    def save(self, commit=True) -> User:
+        """
+        Crée la relation UserFollows en affectant explicitement les FK :
+        - user = utilisateur connecté ;
+        - followed_user = utilisateur retourné par `clean_username`.
 
-    def save(self, commit=True):
-        if self._followed_user is None:
-            raise ValueError("FollowUserForm.save() appelé sans validation préalable (is_valid()).")
-
-        instance = super().save(
-                commit=False,
-        )  # ne sauvegarde pas immédiatement permet d'assigner les champs user et followed_user
+        Ne fait pas confiance aux données POST pour ces champs FK.
+        """
+        instance = super().save(commit=False)
         instance.user = self.user
-        instance.followed_user = self._followed_user
-        if commit:  # Si commit est True, alors on sauvegarde l'instance dans la base de données
+        instance.followed_user = self.cleaned_data["username"]  # retourné par clean_username
+        if commit:
             instance.save()
-
         return instance
