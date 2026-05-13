@@ -24,11 +24,19 @@
                     <tbody>
                     <tr>
                         {# Champ de saisie unique : `username` est converti par le Form côté serveur une fois validé #}
-                        <td class="cell-user">{{ form.username }}{{ form.username.errors }}</td>
+                        <td class="cell-user">{{ form.username }}</td>
                         <td class="cell-action">
                             <button type="submit" class="btn btn-primary">Suivre</button>
                         </td>
                     </tr>
+                    {% if form.username.errors %}
+                    <tr>
+                        <td class="cell-user cell-user-errors" colspan="2">
+                            {{ form.username.errors }}
+
+                        </td>
+                    </tr>
+                    {% endif %}
                     </tbody>
                 </table>
             </form>
