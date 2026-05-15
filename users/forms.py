@@ -99,4 +99,4 @@ class CreateReviewForm(forms.ModelForm):
 class CreateTicketForm(forms.ModelForm):
     class Meta:
         model = Ticket
-        fields = ['title', 'description']
+        fields = ['title', 'description', 'image']
