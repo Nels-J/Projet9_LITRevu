@@ -6,12 +6,14 @@
 
 {# Surcharge du contenu du bloc "content" de base.html #}
 {% block content %}
+
     <h2>Formulaire de demande d'une critique en construction - Page bientôt disponible !</h2>
     <h3>Ce titre en H3 provient du gabarit ticket_create.html (users)</h3>
 
     <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-        {{ form.as_p }}
+        {{ form.as_p }} {# Affichage des champs du form via des <p> #}
         <button type="submit">Envoyer</button>
     </form>
+
 {% endblock %}
