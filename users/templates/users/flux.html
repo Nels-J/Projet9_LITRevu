@@ -6,6 +6,8 @@
 
 {# Surcharge du contenu du bloc "content" de base.html #}
 {% block content %}
+    <a href="{% url 'ticket-create' %}" class="btn btn-primary">Demander un critique</a>
+    <a href="{% url 'review-create' %}" class="btn btn-primary">Créer une critique</a>
     <h2>Flux en construction - Page bientôt disponible !</h2>
     <h3>Ce titre en H3 provient du gabarit flux.html (users)</h3>
 {% endblock %}

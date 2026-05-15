@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from users.models import User, UserFollows
+from users.models import User, UserFollows, Review, Ticket
 
 
 class UserCreateForm(UserCreationForm):
@@ -88,3 +88,15 @@ class FollowUserForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+
+
+class CreateReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['headline', 'body', 'rating']
+
+
+class CreateTicketForm(forms.ModelForm):
+    class Meta:
+        model = Ticket
+        fields = ['title', 'description']

@@ -22,6 +22,8 @@ from .views import (
     RegisterView,
     FluxView,
     PostsView,
+    CreateReviewView,
+    CreateTicketView,
     AbonnementsView,
     UnfollowView,
 )
@@ -31,6 +33,8 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('register/', RegisterView.as_view(), name='register'),
     path('posts/', PostsView.as_view(), name='posts'),
+    path('review/create/', CreateReviewView.as_view(), name='review-create'),
+    path('ticket/create/', CreateTicketView.as_view(), name='ticket-create'),
     path('abonnements/', AbonnementsView.as_view(), name='abonnements'),
     path("abonnements/unfollow/<int:follow_id>/", UnfollowView.as_view(), name="unfollow"),
     path('', FluxView.as_view(), name='flux'),

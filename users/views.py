@@ -11,7 +11,7 @@ from django.db.models import QuerySet
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, ListView, DeleteView
 
-from users.forms import UserCreateForm, FollowUserForm
+from users.forms import UserCreateForm, FollowUserForm, CreateReviewForm, CreateTicketForm
 from users.models import Ticket, Review, UserFollows
 
 User = get_user_model()
@@ -100,3 +100,25 @@ class UnfollowView(LoginRequiredMixin, DeleteView):
            En filtrant le queryset avec self.request.user
         """
         return UserFollows.objects.filter(user=self.request.user)
+
+
+class CreateReviewView(LoginRequiredMixin, CreateView):
+    model = Review
+    form_class = CreateReviewForm
+    template_name = 'users/review_create.html'
+    success_url = reverse_lazy('flux')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+class CreateTicketView(LoginRequiredMixin, CreateView):
+    model = Ticket
+    form_class = CreateTicketForm
+    template_name = 'users/ticket_create.html'
+    success_url = reverse_lazy('flux')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
