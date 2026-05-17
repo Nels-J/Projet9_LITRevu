@@ -32,7 +32,9 @@
                     {% if post.description %}
                         <p>{{ post.description }}</p>
                     {% endif %}
-
+                    {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="Image du ticket" style="max-width:200px;">
+                    {% endif %}
                 {% endif %}
             </article>
         {% endfor %}
