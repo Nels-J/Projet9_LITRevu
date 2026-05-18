@@ -28,13 +28,7 @@
 
                 {% else %}
                     {# Ticket #}
-                    <h2>Ticket: {{ post.title }}</h2>
-                    {% if post.description %}
-                        <p>{{ post.description }}</p>
-                    {% endif %}
-                    {% if post.image %}
-                        <img src="{{ post.image.url }}" alt="Image du ticket" style="max-width:200px;">
-                    {% endif %}
+                    {% include 'users/includes/ticket_card.html' with ticket=post %}
                 {% endif %}
             </article>
         {% endfor %}

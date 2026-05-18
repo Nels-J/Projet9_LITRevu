@@ -1,0 +1,21 @@
+{# includes/ticket_card.html #}
+<article style="border:1px solid #ccc; padding:12px; margin:12px 0;">
+
+    {% if ticket.user == request.user %}
+        <p><strong>Vous avez publié un ticket</strong></p>
+    {% else %}
+        <p><strong>{{ ticket.user.username }} a publié un ticket</strong></p>
+    {% endif %}
+
+    <h2>{{ ticket.title }}</h2>
+    <small>{{ ticket.time_created|date:"d/m/Y H:i" }}</small>
+
+    {% if ticket.description %}
+        <p>{{ ticket.description }}</p>
+    {% endif %}
+
+    {% if ticket.image %}
+        <img src="{{ ticket.image.url }}" alt="Image du ticket" style="max-width:200px;">
+    {% endif %}
+
+</article>
