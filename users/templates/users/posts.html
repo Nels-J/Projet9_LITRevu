@@ -12,7 +12,7 @@
     {% if posts %}
         {% for post in posts %}
             <article style="border:1px solid #ccc; padding:12px; margin:12px 0;">
-                <small>{{ post.time_created|date:"d/m/Y H:i" }}</small>
+                <small>{{ post.time_created|date:"H:i, j F Y"|lower }}</small>
 
                 {% if post.ticket %}
                     {# Review #}

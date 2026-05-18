@@ -7,8 +7,8 @@
         <p><strong>{{ ticket.user.username }} a publié un ticket</strong></p>
     {% endif %}
 
-    <h2>{{ ticket.title }}</h2>
-    <small>{{ ticket.time_created|date:"d/m/Y H:i" }}</small>
+    <small>{{ ticket.time_created|date:"H:i, j F Y"|lower }}</small>
+    <p>{{ ticket.title }}</p>
 
     {% if ticket.description %}
         <p>{{ ticket.description }}</p>
