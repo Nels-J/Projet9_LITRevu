@@ -25,6 +25,7 @@ from .views import (
     CreateReviewView,
     CreateTicketView,
     UpdateTicketView,
+    DeleteTicketView,
     AbonnementsView,
     UnfollowView,
 )
@@ -41,7 +42,7 @@ urlpatterns = [
     path('ticket/create/', CreateTicketView.as_view(), name='ticket-create'),
     # todo: path('ticket/<int:pk>/read/' , ReadTicketView.as_view(), name='ticket-read'),
     path('ticket/<int:pk>/update/', UpdateTicketView.as_view(), name='ticket-update'),
-    # todo: path('ticket/<int:pk>/delete/', DeleteTicketView.as_view(), name='ticket-delete'),
+    path('ticket/<int:pk>/delete/', DeleteTicketView.as_view(), name='ticket-delete'),
     path('abonnements/', AbonnementsView.as_view(), name='abonnements'),
     path("abonnements/unfollow/<int:follow_id>/", UnfollowView.as_view(), name="unfollow"),
 
