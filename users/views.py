@@ -9,7 +9,7 @@ from django.contrib.auth.views import (
 )
 from django.db.models import QuerySet
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, CreateView, ListView, DeleteView
+from django.views.generic import TemplateView, CreateView, ListView, DeleteView, UpdateView
 
 from users.forms import UserCreateForm, FollowUserForm, CreateReviewForm, CreateTicketForm
 from users.models import Ticket, Review, UserFollows
@@ -122,3 +122,9 @@ class CreateTicketView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+class UpdateTicketView(LoginRequiredMixin, UpdateView):
+    model = Ticket
+    form_class = CreateTicketForm
+    template_name = 'users/ticket_update.html'
+    success_url = reverse_lazy('flux')

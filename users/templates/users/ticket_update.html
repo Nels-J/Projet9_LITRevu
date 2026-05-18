@@ -1,0 +1,19 @@
+{# ticket_update.html #}
+{% extends 'users/base.html' %}
+
+{# Surcharge du contenu du head title de base.html #}
+{% block title %} - Modifier ticket{% endblock %}
+
+{# Surcharge du contenu du bloc "content" de base.html #}
+{% block content %}
+
+    <h2>Formulaire "Modifier votre ticket" en construction.</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">Enregistrer</button>
+    </form>
+
+{% endblock %}

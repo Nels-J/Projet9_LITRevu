@@ -28,6 +28,7 @@
                 {% else %}
                     {# Ticket #}
                     {% include 'users/includes/ticket_card.html' with ticket=post %}
+                    <a href="{% url 'ticket-update' post.pk %}" class="btn btn-primary">Modifier</a>
                 {% endif %}
             </article>
         {% endfor %}
