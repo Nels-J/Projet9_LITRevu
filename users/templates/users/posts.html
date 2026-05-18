@@ -2,14 +2,12 @@
 {% extends 'users/base.html' %}
 
 {# Surcharge du contenu du head title de base.html #}
-{% block title %} - posts{% endblock %}
+{% block title %} - Vos posts{% endblock %}
 
 {# Surcharge du contenu du bloc "content" de base.html #}
 {% block content %}
 
-    <h2>Mes posts</h2>
-    <h3>Posts en construction - Page bientôt disponible !</h3>
-    <h4>Ce titre en H4 provient du gabarit posts.html (users)</h4>
+    <h2>Vos posts</h2>
 
     {% if posts %}
         {% for post in posts %}
