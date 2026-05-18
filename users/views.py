@@ -128,10 +128,11 @@ class UpdateTicketView(LoginRequiredMixin, UserPassesTestMixin , UpdateView):
     model = Ticket
     form_class = CreateTicketForm
     template_name = 'users/ticket_update.html'
-    success_url = reverse_lazy('flux')
+    success_url = reverse_lazy('posts')
 
     def test_func(self) -> bool :
-        """Vérifie si le ticket appartient bien l'utilisateur connecté, sinon une 403 sera rendu via la class UserPassesTestMixin  """
+        """Vérifie si le ticket appartient bien l'utilisateur connecté, sinon une 403 sera rendu via la class
+        UserPassesTestMixin"""
         ticket = self.get_object()
         return ticket.user == self.request.user
 
