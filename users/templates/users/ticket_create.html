@@ -2,17 +2,18 @@
 {% extends 'users/base.html' %}
 
 {# Surcharge du contenu du head title de base.html #}
-{% block title %} - Demande de critique{% endblock %}
+{% block title %} - Créer un ticket{% endblock %}
+
+<h2>Créer un ticket</h2>
 
 {# Surcharge du contenu du bloc "content" de base.html #}
 {% block content %}
 
-    <h2>Formulaire de demande d'une critique (Ticket) en construction.</h2>
-
     <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-        {{ form.as_p }} {# Affichage des champs du form via des <p> #}
-        <button type="submit">Envoyer</button>
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-primary">Envoyer</button>
     </form>
 
 {% endblock %}
