@@ -11,8 +11,7 @@
 
     {% if posts %}
         {% for post in posts %}
-            <article style="border:1px solid #ccc; padding:12px; margin:12px 0;">
-                <small>{{ post.time_created|date:"H:i, j F Y"|lower }}</small>
+            <article style="border:1px solid #ccc; padding:10px; margin:10px 0;">
 
                 {% if post.ticket %}
                     {# Review #}
@@ -28,8 +27,6 @@
                 {% else %}
                     {# Ticket #}
                     {% include 'users/includes/ticket_card.html' with ticket=post %}
-                    <a href="{% url 'ticket-update' post.pk %}" class="btn btn-primary">Modifier</a>
-                    <a href="{% url 'ticket-delete' post.pk %}" class="btn btn-secondary">Supprimer</a>
                 {% endif %}
             </article>
         {% endfor %}

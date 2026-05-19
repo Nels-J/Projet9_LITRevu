@@ -1,5 +1,5 @@
 {# includes/ticket_card.html #}
-<article style="border:1px solid #ccc; padding:12px; margin:12px 0;">
+<article style="border:1px solid #ccc; padding:10px; margin:10px 0;">
 
     {% if ticket.user == request.user %}
         <p>Vous avez publié un ticket</p>
@@ -7,7 +7,7 @@
         <p>{{ ticket.user.username }} a publié un ticket</p>
     {% endif %}
 
-    <small>{{ ticket.time_created|date:"H:i, j F Y"|lower }}</small>
+    <p>{{ ticket.time_created|date:"H:i, j F Y"|lower }}</p>
     <p>{{ ticket.title }}</p>
 
     {% if ticket.description %}
@@ -17,5 +17,10 @@
     {% if ticket.image %}
         <img src="{{ ticket.image.url }}" alt="Image du ticket" style="max-width:200px;">
     {% endif %}
+
+    <div>
+        <a href="{% url 'ticket-update' ticket.pk %}" class="btn btn-primary">Modifier</a>
+        <a href="{% url 'ticket-delete' ticket.pk %}" class="btn btn-secondary">Supprimer</a>
+    </div>
 
 </article>
