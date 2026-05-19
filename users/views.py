@@ -9,7 +9,7 @@ from django.contrib.auth.views import (
 )
 from django.db.models import QuerySet
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, CreateView, ListView, DeleteView, UpdateView
+from django.views.generic import CreateView, ListView, DeleteView, UpdateView
 
 from users.forms import UserCreateForm, FollowUserForm, CreateReviewForm, CreateTicketForm
 from users.models import Ticket, Review, UserFollows
@@ -36,8 +36,35 @@ class RegisterView(CreateView):
         return super().form_valid(form)
 
 
-class FluxView(LoginRequiredMixin, TemplateView):
+class FluxView(LoginRequiredMixin, ListView):
     template_name = 'users/flux.html'
+    context_object_name = 'feeds'
+
+    def get_queryset(self):
+        # Liste les IDs des utilisateurs suivis par l'utilisateur connecté
+        followed_user_ids = UserFollows.objects.filter(
+            user=self.request.user
+        ).values_list('followed_user_id', flat=True)
+
+        # Ajoute à la liste des utilisateurs ciblés, l'utilisateur connecté
+        visible_user_ids = list(followed_user_ids) + [self.request.user.id]
+
+        # Sélectionne Tickets et Reviews correspondant aux utilisateurs ciblés.
+        tickets = Ticket.objects.filter(
+            user_id__in=visible_user_ids
+        ).select_related('user')
+
+        # todo: a vérifier une fois les Review possible - non implémenté
+        reviews = Review.objects.filter(
+            user_id__in=visible_user_ids
+        ).select_related('user', 'ticket', 'ticket__user')
+
+        # Fusion + tri du plus récent au plus ancien
+        return sorted(
+            chain(tickets, reviews),
+            key=lambda post: post.time_created,
+            reverse=True,
+        )
 
 
 class PostsView(LoginRequiredMixin, ListView):
