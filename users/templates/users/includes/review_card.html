@@ -1,0 +1,32 @@
+{# includes/review_card.html #}
+<article style="border:1px solid #ccc; padding:12px; margin:12px 0;">
+
+    {% if review.user == request.user %}
+        <p>Vous avez publié une critique</p>
+    {% else %}
+        <p>{{ review.user.username }} a publié une critique</p>
+    {% endif %}
+
+    <small>{{ review.time_created|date:"H:i, j F Y"|lower }}</small>
+    <h2>{{ review.headline }} — {{ review.rating }}/5</h2>
+
+    {# Ticket lié à la review #}
+    <div style="border:1px solid #aaa; padding:8px; margin:8px 0;">
+        {% if review.ticket.user == request.user %}
+            <p>Ticket - Vous</p>
+        {% else %}
+            <p>Ticket - {{ review.ticket.user.username }}</p>
+        {% endif %}
+        <p>{{ review.ticket.title }}</p>
+    </div>
+
+    {% if review.body %}
+        <p>{{ review.body }}</p>
+    {% endif %}
+
+    <div>
+        <a href="{% url 'review-update' review.pk %}" class="btn btn-primary">Modifier</a>
+        <a href="{% url 'review-delete' review.pk %}" class="btn btn-secondary">Supprimer</a>
+    </div>
+
+</article>

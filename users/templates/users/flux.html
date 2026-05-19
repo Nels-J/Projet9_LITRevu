@@ -6,8 +6,22 @@
 
 {# Surcharge du contenu du bloc "content" de base.html #}
 {% block content %}
-    <a href="{% url 'ticket-create' %}" class="btn btn-primary">Demander un critique</a>
-    <a href="{% url 'review-create' %}" class="btn btn-primary">Créer une critique</a>
-    <h2>Flux en construction - Page bientôt disponible !</h2>
-    <h3>Ce titre en H3 provient du gabarit flux.html (users)</h3>
+    <div>
+        <a href="{% url 'ticket-create' %}" class="btn btn-primary">Demander un critique</a>
+        <a href="{% url 'review-create' %}" class="btn btn-primary">Créer une critique</a>
+    </div>
+
+    {% if feeds %}
+        {% for feed in feeds %}
+            <article style="border:1px solid #ccc; padding:10px; margin:10px 0;">
+                {% if feed.ticket %}
+                    {# Review #}
+                    {% include 'users/includes/review_card.html' with review=feed %}
+                {% else %}
+                    {# Ticket #}
+                    {% include 'users/includes/ticket_card.html' with ticket=feed %}
+                {% endif %}
+            </article>
+        {% endfor %}
+    {% endif %}
 {% endblock %}
