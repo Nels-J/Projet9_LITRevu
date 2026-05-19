@@ -15,24 +15,16 @@
 
                 {% if post.ticket %}
                     {# Review #}
-{#                    {% todo: include 'users/includes/review_card.html' with review=post %}#}
-                    <h2>Review: {{ post.headline }}</h2>
-                    <p>Note: {{ post.rating }}/5</p>
-                    <p>Sur le ticket: {{ post.ticket.title }}</p>
-
-                    {% if post.body %}
-                        <p>{{ post.body }}</p>
-                    {% endif %}
-
+                    {% include 'users/includes/review_card.html' with review=post %}
                 {% else %}
                     {# Ticket #}
                     {% include 'users/includes/ticket_card.html' with ticket=post %}
                 {% endif %}
+
             </article>
         {% endfor %}
-
     {% else %}
-        <p>Aucun post pour le moment.</p>
+        <p>Vous n'avez pas encore publié de demande de critique, ni de critique. </p>
     {% endif %}
 
 {% endblock %}
