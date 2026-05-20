@@ -90,13 +90,13 @@ class FollowUserForm(forms.ModelForm):
         return instance
 
 
-class CreateReviewForm(forms.ModelForm):
+class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ['headline', 'body', 'rating']
 
 
-class CreateTicketForm(forms.ModelForm):
+class TicketForm(forms.ModelForm):
     class Meta:
         model = Ticket
         fields = ['title', 'description', 'image']
