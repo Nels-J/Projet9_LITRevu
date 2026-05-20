@@ -8,8 +8,9 @@ from django.contrib.auth.views import (
     LogoutView as DjangoLogoutView,
 )
 from django.db.models import QuerySet
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, DeleteView, UpdateView
+from django.views.generic import CreateView, ListView, DeleteView, UpdateView, TemplateView
 
 from users.forms import UserCreateForm, FollowUserForm, ReviewForm, TicketForm
 from users.models import Ticket, Review, UserFollows
@@ -149,6 +150,45 @@ class CreateTicketView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+
+class CreateResponseView(LoginRequiredMixin, TemplateView):
+    """ Création d'une Review en réponse à un Ticket existant. L'ID du Ticket parent est passé en paramètre d'URL."""
+    template_name = 'users/response_create.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.ticket = get_object_or_404(
+            Ticket,
+            pk=kwargs['pk']
+        )
+
+        return super().dispatch(
+            request,
+            *args,
+            **kwargs
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['ticket'] = self.ticket
+        context['review_form'] = ReviewForm()
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        review_form = ReviewForm(request.POST)
+        if review_form.is_valid():
+            review = review_form.save(commit=False)
+            review.ticket = self.ticket
+            review.user = self.request.user
+            review.save()
+
+            return redirect('flux')
+
+        return self.render_to_response({
+                'review_form': review_form,
+                'ticket': self.ticket,
+        })
 
 
 class UpdateTicketView(LoginRequiredMixin, UserPassesTestMixin , UpdateView):

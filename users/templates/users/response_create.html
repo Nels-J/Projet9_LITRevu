@@ -1,0 +1,27 @@
+{# response_create.html #}
+{% extends 'users/base.html' %}
+
+{# Surcharge du contenu du head title de base.html #}
+{% block title %} - Réponse à une critique{% endblock %}
+
+{# Surcharge du contenu du bloc "content" de base.html #}
+{% block content %}
+
+    <h2>Créer une critique</h2>
+    <div style="border: 1px solid #ccc; padding:10px; margin:10px 0;">
+        <p>Vous êtes en train de poster une réponse à</p>
+        {# Ticket #}
+        {% include 'users/includes/ticket_card.html' with ticket=ticket %}
+
+        <p>Critique</p>
+            <p> Ici le formulaire pour remplir la critique</p>
+            <form method="post">
+                {% csrf_token %}
+                    {{ review_form.as_p }}
+
+                    <button type="submit" class="btn btn-primary">Envoyer</button>
+            </form>
+    </div>
+
+
+{% endblock %}

@@ -19,7 +19,7 @@
                     {% include 'users/includes/review_card.html' with review=feed %}
                 {% else %}
                     {# Ticket #}
-                    {% include 'users/includes/ticket_card.html' with ticket=feed %}
+                    {% include 'users/includes/ticket_card.html' with ticket=feed mode='non_author' %}
                 {% endif %}
             </article>
         {% endfor %}

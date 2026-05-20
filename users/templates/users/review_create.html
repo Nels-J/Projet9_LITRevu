@@ -6,17 +6,20 @@
 
 {# Surcharge du contenu du bloc "content" de base.html #}
 {% block content %}
-    <h2>Formulaire de création d'une critique en construction - Page bientôt disponible !</h2>
 
-    <h3>Première section qui doit reprendre le formulaire de Billet (Ticket)</h3>
-    <h3>Seconde partie qui doit afficher le formulaire de Critique (Review)</h3>
-    <p>Titre de la critique:</p>
-    <p>Champ d'input du titre</p>
-    <p>Note :</p>
-    <p>Echelle de Likert 0 à 5 sur une ligne en bouton radio</p>
-    <p>Commentaire :</p>
-    <p>Text area de commentaire</p>
-    <p>submit bouton</p>
+    <section>
+        {# Ticket #}
+        {% include 'users/includes/ticket_card.html' with ticket=post %}
+    </section>
 
+    <section>
+        <p>Partie correspondant à la review</p>
+        <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+            {{ form.as_p }}
+
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+        </form>
+    </section>
 
 {% endblock %}
