@@ -137,8 +137,13 @@ class CreateReviewView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('flux')
 
     def form_valid(self, form):
+        """ Assigne l'utilisateur connecté à la review avant de la sauvegarder.
+            En assignant form.instance.user dans form_valid() on s'assure que l'utilisateur est défini de manière sûre,
+            indépendamment des données POST (champ user masqué dans le formulaire).
+        """
         form.instance.user = self.request.user
-        return super().form_valid(form)
+
+        return super().form_valid(form)  # renvoi
 
 
 class CreateTicketView(LoginRequiredMixin, CreateView):
