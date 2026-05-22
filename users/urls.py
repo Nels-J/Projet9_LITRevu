@@ -24,6 +24,7 @@ from .views import (
     FluxView,
     CreateReviewView,
     CreateTicketView,
+    UpdateReviewView,
     UpdateTicketView,
     DeleteTicketView,
     AbonnementsView,
@@ -31,21 +32,22 @@ from .views import (
 )
 
 urlpatterns = [
+    path('', FluxView.as_view(), name='flux'),
+    path('register/', RegisterView.as_view(), name='register'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
-    path('register/', RegisterView.as_view(), name='register'),
 
     path('posts/', PostsView.as_view(), name='posts'),
 
     path('review/create/', CreateReviewView.as_view(), name='review-create'),
+    path('review/<int:pk>/update', UpdateReviewView.as_view(), name='review-update'),
 
     path('ticket/create/', CreateTicketView.as_view(), name='ticket-create'),
-    # todo: path('ticket/<int:pk>/read/' , ReadTicketView.as_view(), name='ticket-read'),
     path('ticket/<int:pk>/review/', CreateResponseView.as_view(), name='response-create'),
     path('ticket/<int:pk>/update/', UpdateTicketView.as_view(), name='ticket-update'),
     path('ticket/<int:pk>/delete/', DeleteTicketView.as_view(), name='ticket-delete'),
+
     path('abonnements/', AbonnementsView.as_view(), name='abonnements'),
     path("abonnements/unfollow/<int:follow_id>/", UnfollowView.as_view(), name="unfollow"),
 
-    path('', FluxView.as_view(), name='flux'),
 ]
