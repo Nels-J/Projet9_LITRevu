@@ -219,3 +219,16 @@ class DeleteTicketView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         UserPassesTestMixin"""
         ticket = self.get_object()
         return ticket.user == self.request.user
+
+
+class UpdateReviewView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Review
+    form_class = ReviewForm
+    template_name = 'users/review_update.html'
+    success_url = reverse_lazy('posts')
+
+    def test_func(self) -> bool :
+        """Vérifie si la review appartient bien l'utilisateur connecté, sinon une 403 sera rendu via la class
+        UserPassesTestMixin"""
+        review = self.get_object()
+        return review.user == self.request.user
