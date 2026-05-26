@@ -11,7 +11,7 @@
     <div style="border: 1px solid #ccc; padding:10px; margin:10px 0;">
         <p>Vous êtes en train de poster une réponse à</p>
         {# Ticket #}
-        {% include 'users/includes/ticket_card.html' with ticket=ticket %}
+        {% include 'users/includes/ticket_card.html' with ticket=ticket hide_response_button=True %}
 
         <p>Critique</p>
             <p> Ici le formulaire pour remplir la critique</p>
