@@ -1,4 +1,5 @@
 from itertools import chain
+from typing import Any
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -8,6 +9,7 @@ from django.contrib.auth.views import (
     LogoutView as DjangoLogoutView,
 )
 from django.db.models import QuerySet
+from django.http import HttpResponse, HttpResponseBase, Http404
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DeleteView, UpdateView, TemplateView
@@ -157,43 +159,36 @@ class CreateTicketView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class CreateResponseView(LoginRequiredMixin, TemplateView):
-    """ Création d'une Review en réponse à un Ticket existant. L'ID du Ticket parent est passé en paramètre d'URL."""
+class CreateResponseView(LoginRequiredMixin, CreateView):
+    """
+    Crée une Review en réponse à un Ticket existant.
+
+    - Charge le ticket parent depuis l'URL (pk).
+    - Expose ce ticket au template.
+    - Crée la review en assignant user connecté et ticket au formulaire avant sauvegarde. (commit)
+    """
+    model = Review
+    form_class = ReviewForm
     template_name = 'users/response_create.html'
+    success_url = reverse_lazy('flux')
 
-    def dispatch(self, request, *args, **kwargs):
-        self.ticket = get_object_or_404(
-            Ticket,
-            pk=kwargs['pk']
-        )
+    def dispatch(self, request, *args, **kwargs) -> HttpResponseBase:
+        """ Prépare la vue avant routage GET/POST. """
+        self.ticket = get_object_or_404(Ticket, pk=kwargs['pk'])  # Récupère ID du Ticket parent depuis l'URL, 404 si non trouvé.
+        if self.ticket.user == self.request.user:
+            raise Http404("Vous ne pouvez pas répondre à votre propre ticket.")  # Interdit de répondre à son propre ticket.
+        return super().dispatch(request, *args, **kwargs)  # L'instance CreateView gère le routage GET/POST.
 
-        return super().dispatch(
-            request,
-            *args,
-            **kwargs
-        )
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['ticket'] = self.ticket
-        context['review_form'] = ReviewForm()
-
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        """ Enrichit le contexte du template. """
+        context = super().get_context_data(**kwargs)  # Contexte fourni par CreateView (le formulaire)
+        context['ticket'] = self.ticket  # Ajout du ticket parent au contexte pour affichage dans le template.
         return context
 
-    def post(self, request, *args, **kwargs):
-        review_form = ReviewForm(request.POST)
-        if review_form.is_valid():
-            review = review_form.save(commit=False)
-            review.ticket = self.ticket
-            review.user = self.request.user
-            review.save()
-
-            return redirect('flux')
-
-        return self.render_to_response({
-                'review_form': review_form,
-                'ticket': self.ticket,
-        })
+    def form_valid(self, form) -> HttpResponse:
+        form.instance.user = self.request.user
+        form.instance.ticket = self.ticket
+        return super().form_valid(form)
 
 
 class UpdateTicketView(LoginRequiredMixin, UserPassesTestMixin , UpdateView):

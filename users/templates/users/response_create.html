@@ -17,7 +17,7 @@
             <p> Ici le formulaire pour remplir la critique</p>
             <form method="post">
                 {% csrf_token %}
-                    {{ review_form.as_p }}
+                    {{ form.as_p }}
 
                     <button type="submit" class="btn btn-primary">Envoyer</button>
             </form>
