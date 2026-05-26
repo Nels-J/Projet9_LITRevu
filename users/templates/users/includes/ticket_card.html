@@ -23,8 +23,8 @@
             <a href="{% url 'ticket-update' ticket.pk %}" class="btn btn-primary">Modifier</a>
             <a href="{% url 'ticket-delete' ticket.pk %}" class="btn btn-secondary">Supprimer</a>
         {% endif %}
-        {# Bouton accessible pour les non auteur du ticket ET SI il n'y a pas encore de critique ET selon context #}
-        {% if not ticket.has_review and not ticket.user == user and not hide_response_button %}
+        {# Conditions d'accès et d'affichage via le flag #}
+        {% if ticket.pk and not ticket.has_review and not ticket.user == user and not hide_response_button %}
             <a href="{% url 'response-create' ticket.pk %}" class="btn btn-primary">Créer une réponse</a>
         {% endif %}
     </div>
