@@ -10,6 +10,12 @@
     <small>{{ review.time_created|date:"H:i, j F Y"|lower }}</small>
     <h2>{{ review.headline }} — {{ review.rating }}/5</h2>
 
+    {# Le rating en bouton radio de 1 à 5 (0 valeur par défaut) #}
+    {% for i in "12345"|make_list %}
+        <input type="radio" name="rating" value="{{ i }}">
+        {{ i }}
+    {% endfor %}
+
     {% if review.body %}
         <p>{{ review.body }}</p>
     {% endif %}

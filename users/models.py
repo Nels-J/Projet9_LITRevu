@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import MaxValueValidator
 from django.db import models
 
 
@@ -27,11 +27,8 @@ class Ticket(models.Model):
 class Review(models.Model):
     ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE)
     rating = models.PositiveSmallIntegerField(
-            validators=[
-                    MinValueValidator(0),
-                    MaxValueValidator(5)
-            ],
-    )
+            validators=[MaxValueValidator(5)]
+)
     headline = models.CharField(max_length=128)
     body = models.CharField(max_length=8192, blank=True)
     user = models.ForeignKey(
@@ -45,6 +42,11 @@ class Review(models.Model):
             models.UniqueConstraint(
                 fields=['user', 'ticket'],
                 name='unique_user_review_per_ticket',
+            ),
+            # Condition pour renforcer l'intégrité niveau DB en sus de PositiveSmallIntegerField niveau champ.
+            models.CheckConstraint(
+                condition=models.Q(rating__gte=0, rating__lte=5),
+                name='rating_between_0_and_5',
             ),
         ]
 

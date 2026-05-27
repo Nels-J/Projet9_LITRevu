@@ -91,6 +91,12 @@ class FollowUserForm(forms.ModelForm):
 
 
 class ReviewForm(forms.ModelForm):
+    # Le champ rating est défini manuellement pour limiter les choix à 0-5 et convertir en int.
+    rating = forms.TypedChoiceField(
+        choices=[(i, i) for i in range(6)],
+        coerce=int
+    )
+
     class Meta:
         model = Review
         fields = ['headline', 'body', 'rating']
