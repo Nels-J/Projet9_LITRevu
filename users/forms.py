@@ -90,6 +90,42 @@ class FollowUserForm(forms.ModelForm):
         return instance
 
 
+class CreateReviewAndTicketForm(forms.Form):
+    # Champs pour le Ticket
+    title = forms.CharField(max_length=128, label="Titre")
+    description = forms.CharField(widget=forms.Textarea, label="Description", required=False)
+    image = forms.ImageField(label="Image", required=False)
+
+    # Champs pour la Review
+    headline = forms.CharField(max_length=128, label="Titre")
+    rating = forms.TypedChoiceField(
+        choices=[(i, i) for i in range(6)],
+        coerce=int,
+        label="Note"
+    )
+    body = forms.CharField(widget=forms.Textarea, label="Commentaire", required=False)
+
+    def save(self, user):
+        # Création du Ticket
+        ticket = Ticket.objects.create(
+            title=self.cleaned_data['title'],
+            description=self.cleaned_data['description'],
+            image=self.cleaned_data['image'],
+            user=user
+        )
+
+        # Création de la Review associée au Ticket
+        review = Review.objects.create(
+            ticket=ticket,
+            headline=self.cleaned_data['headline'],
+            rating=self.cleaned_data['rating'],
+            body=self.cleaned_data['body'],
+            user=user
+        )
+
+        return review  # Retourne la review créée (le ticket est accessible via review.ticket)
+
+
 class ReviewForm(forms.ModelForm):
     # Le champ rating est défini manuellement pour limiter les choix à 0-5 et convertir en int.
     rating = forms.TypedChoiceField(

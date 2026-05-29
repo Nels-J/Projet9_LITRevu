@@ -12,9 +12,9 @@ from django.db.models import QuerySet
 from django.http import HttpResponse, HttpResponseBase, Http404
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, DeleteView, UpdateView, TemplateView
+from django.views.generic import CreateView, ListView, DeleteView, UpdateView, TemplateView, FormView
 
-from users.forms import UserCreateForm, FollowUserForm, ReviewForm, TicketForm
+from users.forms import UserCreateForm, FollowUserForm, ReviewForm, TicketForm, CreateReviewAndTicketForm
 from users.models import Ticket, Review, UserFollows
 
 User = get_user_model()
@@ -132,9 +132,9 @@ class UnfollowView(LoginRequiredMixin, DeleteView):
         return UserFollows.objects.filter(user=self.request.user)
 
 
-class CreateReviewView(LoginRequiredMixin, CreateView):
+class CreateReviewView(LoginRequiredMixin, FormView):
     model = Review
-    form_class = ReviewForm
+    form_class = CreateReviewAndTicketForm
     template_name = 'users/review_create.html'
     success_url = reverse_lazy('flux')
 
@@ -143,8 +143,7 @@ class CreateReviewView(LoginRequiredMixin, CreateView):
             En assignant form.instance.user dans form_valid() on s'assure que l'utilisateur est défini de manière sûre,
             indépendamment des données POST (champ user masqué dans le formulaire).
         """
-        form.instance.user = self.request.user
-
+        form.save(user=self.request.user)
         return super().form_valid(form)  # renvoi
 
 
