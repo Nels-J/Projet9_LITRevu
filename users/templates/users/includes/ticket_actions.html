@@ -10,6 +10,6 @@
 
     {# Conditions d'accès et d'affichage via le flag #}
     {% if not ticket.has_review %}
-        <a href="{% url 'response-create' ticket.pk %}" class="btn btn-primary">Créer une réponse</a>
+        <a href="{% url 'response-create' ticket.pk %}" class="btn btn-primary">Donner son avis</a>
     {% endif %}
 </div>
