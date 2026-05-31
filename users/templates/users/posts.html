@@ -16,9 +16,12 @@
                 {% if post.ticket %}
                     {# Review #}
                     {% include 'users/includes/review_card.html' with review=post %}
+                    {% include 'users/includes/review_actions.html' with review=post %}
+
                 {% else %}
                     {# Ticket #}
                     {% include 'users/includes/ticket_card.html' with ticket=post %}
+                    {% include 'users/includes/ticket_actions.html' with ticket=post %}
                 {% endif %}
 
             </article>
