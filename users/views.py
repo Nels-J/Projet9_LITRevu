@@ -9,8 +9,8 @@ from django.contrib.auth.views import (
     LogoutView as DjangoLogoutView,
 )
 from django.db.models import QuerySet
-from django.http import HttpResponse, HttpResponseBase, Http404
-from django.shortcuts import get_object_or_404, redirect
+from django.http import HttpResponse, HttpResponseBase
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DeleteView, UpdateView, TemplateView, FormView
 
@@ -174,8 +174,6 @@ class CreateResponseView(LoginRequiredMixin, CreateView):
     def dispatch(self, request, *args, **kwargs) -> HttpResponseBase:
         """ Prépare la vue avant routage GET/POST. """
         self.ticket = get_object_or_404(Ticket, pk=kwargs['pk'])  # Récupère ID du Ticket parent depuis l'URL, 404 si non trouvé.
-        if self.ticket.user == self.request.user:
-            raise Http404("Vous ne pouvez pas répondre à votre propre ticket.")  # Interdit de répondre à son propre ticket.
         return super().dispatch(request, *args, **kwargs)  # L'instance CreateView gère le routage GET/POST.
 
     def get_context_data(self, **kwargs) -> dict[str, Any]:
