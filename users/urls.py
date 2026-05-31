@@ -24,11 +24,13 @@ from .views import (
     FluxView,
     CreateReviewView,
     CreateTicketView,
+    CreateResponseView,
     UpdateReviewView,
     UpdateTicketView,
     DeleteTicketView,
+    DeleteReviewView,
     AbonnementsView,
-    UnfollowView, CreateResponseView,
+    UnfollowView,
 )
 
 urlpatterns = [
@@ -41,6 +43,7 @@ urlpatterns = [
 
     path('review/create/', CreateReviewView.as_view(), name='review-create'),
     path('review/<int:pk>/update', UpdateReviewView.as_view(), name='review-update'),
+    path('review/<int:pk>/delete/', DeleteReviewView.as_view(), name='review-delete'),
 
     path('ticket/create/', CreateTicketView.as_view(), name='ticket-create'),
     path('ticket/<int:pk>/review/', CreateResponseView.as_view(), name='response-create'),
