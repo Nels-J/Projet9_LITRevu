@@ -6,20 +6,32 @@
 
 {# Surcharge du contenu du bloc "content" de base.html #}
 {% block content %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <Section style="border:1px solid #ccc; padding:10px;">
+        <h3>Livre / Article</h3>
+        {{ form.title.label_tag }}
+        {{ form.title }}
+        <br>
+        {{ form.description.label_tag }}
+        {{ form.description }}
+        <br>
+        {{ form.image.label_tag }}
+        {{ form.image }}
+    </Section>
 
-    <section>
-        {# Ticket #}
-        {% include 'users/includes/ticket_card.html' with ticket=post %}  {# fixme: affichage du formulaire à blanc  #}
-    </section>
+    <Section style="border:1px solid #ccc; padding:10px; margin-bottom: 10px">
+        <h3>Critique</h3>
+        {{ form.headline.label_tag }}
+        {{ form.headline }}
+        <br>
+        {{ form.rating.label_tag }}
+        {{ form.rating }}
+        <br>
+        {{ form.body.label_tag }}
+        {{ form.body }}
+    </Section>
 
-    <section>
-        <p>Votre review</p>
-        <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-            {{ form.as_p }}
-
-            <button type="submit" class="btn btn-primary">Envoyer</button>
-        </form>
-    </section>
-
+    <button type="submit" class="btn btn-primary">Envoyer</button>
+</form>
 {% endblock %}
