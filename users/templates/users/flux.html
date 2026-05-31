@@ -7,8 +7,8 @@
 {# Surcharge du contenu du bloc "content" de base.html #}
 {% block content %}
     <div>
-        <a href="{% url 'ticket-create' %}" class="btn btn-primary">Demander une critique</a>
-        <a href="{% url 'review-create' %}" class="btn btn-primary">Créer une critique</a>
+        <a href="{% url 'ticket-create' %}" class="btn btn-primary">Nouvelle demande</a>
+        <a href="{% url 'review-create' %}" class="btn btn-primary">Nouvelle critique</a>
     </div>
 
     {% if feeds %}
