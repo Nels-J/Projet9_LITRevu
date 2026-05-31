@@ -18,15 +18,4 @@
         <img src="{{ ticket.image.url }}" alt="Image du ticket" style="max-width:200px;">
     {% endif %}
 
-    <div>
-        {% if ticket.user == user %}  {# Seul l'auteur du billet pourra modifier/supprimer son billet #}
-            <a href="{% url 'ticket-update' ticket.pk %}" class="btn btn-primary">Modifier</a>
-            <a href="{% url 'ticket-delete' ticket.pk %}" class="btn btn-secondary">Supprimer</a>
-        {% endif %}
-        {# Conditions d'accès et d'affichage via le flag #}
-        {% if ticket.pk and not ticket.has_review and not ticket.user == user and not hide_response_button %}
-            <a href="{% url 'response-create' ticket.pk %}" class="btn btn-primary">Créer une réponse</a>
-        {% endif %}
-    </div>
-
 </article>

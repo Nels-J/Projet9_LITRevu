@@ -23,9 +23,14 @@ class Ticket(models.Model):
     def __str__(self):
         return f"{self.title} - {self.description} - by: {self.user}"
 
+    @property
+    def has_review(self):
+        # return self.reviews.exists()  # Vérifie si une review est associée à ce ticket
+       return Review.objects.filter(ticket=self).exists()  # Alternative plus explicite
+
 
 class Review(models.Model):
-    ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE)
+    ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE, related_name="reviews")
     rating = models.PositiveSmallIntegerField(
             validators=[MaxValueValidator(5)]
 )
