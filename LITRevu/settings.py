@@ -24,6 +24,10 @@ SECRET_KEY = 'django-insecure-9frr7_t%&inm+)*o9wh5)t+3_qw0*operh@%9+q7+)*phvl7w8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
 ALLOWED_HOSTS = []
 
 # Application definition
@@ -34,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'debug_toolbar',
     'users'
 ]
 
@@ -44,6 +49,7 @@ LOGIN_REDIRECT_URL = 'flux'  # Redirection après connexion
 LOGOUT_REDIRECT_URL = 'login'  # Redirection après déconnexion
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
