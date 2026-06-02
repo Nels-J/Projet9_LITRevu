@@ -12,7 +12,7 @@ from django.db.models import QuerySet
 from django.http import HttpResponse, HttpResponseBase
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, DeleteView, UpdateView, TemplateView, FormView
+from django.views.generic import CreateView, ListView, DeleteView, UpdateView, FormView
 
 from users.forms import UserCreateForm, FollowUserForm, ReviewForm, TicketForm, CreateReviewAndTicketForm
 from users.models import Ticket, Review, UserFollows
@@ -204,20 +204,17 @@ class DeleteTicketView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('posts')
 
     def get_queryset(self):
-        return super().get_queryset().select_related("user").filter(user=self.request.user)
+        return super().get_queryset().select_related('user').filter(user=self.request.user)
 
 
-class UpdateReviewView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class UpdateReviewView(LoginRequiredMixin, UpdateView):
     model = Review
     form_class = ReviewForm
     template_name = 'users/review_update.html'
     success_url = reverse_lazy('posts')
 
-    def test_func(self) -> bool :
-        """Vérifie si la review appartient bien l'utilisateur connecté, sinon une 403 sera rendu via la class
-        UserPassesTestMixin"""
-        review = self.get_object()
-        return review.user == self.request.user
+    def get_queryset(self):
+        return super().get_queryset().select_related('user').filter(user=self.request.user)
 
 
 class DeleteReviewView(LoginRequiredMixin, DeleteView):
@@ -226,4 +223,4 @@ class DeleteReviewView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('posts')
 
     def get_queryset(self):
-        return super().get_queryset().select_related("user").filter(user=self.request.user)
+        return super().get_queryset().select_related('user').filter(user=self.request.user)
