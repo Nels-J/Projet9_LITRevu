@@ -4,6 +4,7 @@
     --c-mid: #7a6f5e;                           /* bordures, labels, btn secondaire */
     --c-light: #f5f0e8;                         /* fond général                     */
     --c-paper: #ede8dc;                         /* header, panneaux, fond inputs    */
+    --c-danger: red;                             /* boutons de suppression           */
     --c-error: #8b2020;                         /* erreurs uniquement               */
     --c-border-light: rgba(122, 111, 94, 0.2);  /* bordures discrètes               */
 }
@@ -319,7 +320,7 @@ header nav .btn-link:hover {
     background: var(--c-light);
 }
 
-.btn-primary {
+.btn-primary, .btn-danger{
     background: var(--c-dark);
     border-color: var(--c-dark);
     color: var(--c-light);
@@ -330,6 +331,9 @@ header nav .btn-link:hover {
     border-color: var(--c-mid);
 }
 
+.btn-danger:hover {
+    background: var(--c-danger);
+}
 
 /* ===== ABONNEMENTS page ===== */
 .abonnements-page {
