@@ -3,17 +3,21 @@
 
 {# Surcharge du contenu du head title de base.html #}
 {% block title %} - Modifier votre ticket{% endblock %}
-
 {# Surcharge du contenu du bloc "content" de base.html #}
 {% block content %}
-
     <h2>Modifier votre ticket</h2>
-
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-
-        <button type="submit" class="btn btn-primary">Enregistrer</button>
+        <p>Titre {{ form.title }}</p>
+        <p>Description {{ form.description }}</p>
+        <p>Image </p>
+        {% if form.instance.image %}
+           <img src="{{ form.instance.image.url }}"
+                alt="Image actuelle"
+                width="200">
+         {% else %}
+              <p>Aucune image disponible</p>
+        {% endif %}
+        <button type="submit" class="btn btn-primary">Envoyer</button>
     </form>
-
 {% endblock %}

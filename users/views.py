@@ -188,17 +188,14 @@ class CreateResponseView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class UpdateTicketView(LoginRequiredMixin, UserPassesTestMixin , UpdateView):
+class UpdateTicketView(LoginRequiredMixin, UpdateView):
     model = Ticket
     form_class = TicketForm
     template_name = 'users/ticket_update.html'
     success_url = reverse_lazy('posts')
 
-    def test_func(self) -> bool :
-        """Vérifie si le ticket appartient bien l'utilisateur connecté, sinon une 403 sera rendu via la class
-        UserPassesTestMixin"""
-        ticket = self.get_object()
-        return ticket.user == self.request.user
+    def get_queryset(self):
+        return super().get_queryset().select_related('user').filter(user=self.request.user)
 
 
 class DeleteTicketView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
