@@ -198,16 +198,13 @@ class UpdateTicketView(LoginRequiredMixin, UpdateView):
         return super().get_queryset().select_related('user').filter(user=self.request.user)
 
 
-class DeleteTicketView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class DeleteTicketView(LoginRequiredMixin, DeleteView):
     model = Ticket
     template_name = 'users/ticket_confirm_delete.html'
     success_url = reverse_lazy('posts')
 
-    def test_func(self) -> bool :
-        """Vérifie si le ticket appartient bien l'utilisateur connecté, sinon une 403 sera rendu via la class
-        UserPassesTestMixin"""
-        ticket = self.get_object()
-        return ticket.user == self.request.user
+    def get_queryset(self):
+        return super().get_queryset().select_related("user").filter(user=self.request.user)
 
 
 class UpdateReviewView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
