@@ -1,0 +1,15 @@
+{# review_confirm_delete.html #}
+{% extends 'users/base.html' %}
+
+{# Surcharge du contenu du head title de base.html #}
+{% block title %} - Confirmer suppression{% endblock %}
+{# Surcharge du contenu du bloc "content" de base.html #}
+{% block content %}
+    <h2>Confirmer la suppression de la critique "{{ review.headline }}"</h2>
+    <p>Êtes-vous sûr de vouloir supprimer cette critique ? Cette action est irréversible.</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Confirmer la suppression</button>
+        <a href="{% url 'posts' %}" class="btn btn-secondary">Annuler</a>
+    </form>
+{% endblock %}
