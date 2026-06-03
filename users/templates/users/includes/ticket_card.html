@@ -4,7 +4,7 @@
     {% if ticket.user == request.user %}
         <p>Vous avez publié un ticket</p>
     {% else %}
-        <p>{{ ticket.user.username }} a publié un ticket</p>
+        <p>{{ ticket.user.username }} a demandé une critique</p>
     {% endif %}
 
     <p>{{ ticket.time_created|date:"H:i, j F Y"|lower }}</p>
@@ -15,7 +15,7 @@
     {% endif %}
 
     {% if ticket.image %}
-        <img src="{{ ticket.image.url }}" alt="Image du ticket" style="max-width:200px;">
+        <img src="{{ ticket.image.url }}" alt="Image de la couverture du livre en lien avec la demande" style="max-width:200px;">
     {% endif %}
 
 </article>
