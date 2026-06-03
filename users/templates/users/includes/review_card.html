@@ -10,11 +10,7 @@
     <small>{{ review.time_created|date:"H:i, j F Y"|lower }}</small>
     <h2>{{ review.headline }} — {{ review.rating }}/5</h2>
 
-    {# Le rating en bouton radio de 1 à 5 (0 valeur par défaut) #}
-    {% for i in "12345"|make_list %}
-        <input type="radio" name="rating" value="{{ i }}">
-        {{ i }}
-    {% endfor %}
+    {% include 'users/includes/likert_rating_display.html' with rating=review.rating %}
 
     {% if review.body %}
         <p>{{ review.body }}</p>
@@ -28,12 +24,19 @@
             <p>Ticket - {{ review.ticket.user.username }}</p>
         {% endif %}
         <p>{{ review.ticket.title }}</p>
+        <img src="{{ review.ticket.image.url }}"
+               alt="Image actuelle"
+               width="200">
     </div>
 
     <div>
         {% if review.user == user %}
             <a href="{% url 'review-update' review.pk %}" class="btn btn-primary">Modifier</a>
-{#            <a href="{% url 'review-delete' review.pk %}" class="btn btn-secondary">Supprimer</a>#}
+            <a href="{% url 'review-delete' review.pk %}" class="btn btn-secondary">Supprimer</a>
+        {% endif %}
+
+        {% if not review.ticket.has_review %}
+            <a href="{% url 'response-create' review.ticket.pk %}" class="btn btn-primary">Donner son avis</a>
         {% endif %}
     </div>
 

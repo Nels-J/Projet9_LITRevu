@@ -1,0 +1,10 @@
+{# includes/likert_rating_display.html #}
+
+{% for i in "12345"|make_list %}
+    <input
+        type="radio"
+        disabled
+        {% if i|add:"0" == rating %}checked{% endif %}
+    >
+    {{ i }}
+{% endfor %}

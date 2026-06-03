@@ -8,22 +8,33 @@
 {% block content %}
 
     <h2>Créer une critique</h2>
-    <div style="border: 1px solid #ccc; padding:10px; margin:10px 0;">
-        <p>Vous êtes en train de poster une réponse à</p>
-        {# Ticket #}
-        {# hide_response_button permet au gabarit inclus de changer son comportement par un test conditionnel #}
-        {% include 'users/includes/ticket_card.html' with ticket=ticket hide_response_button=True %}
+    <div style="border:1px solid #ccc;" >
 
+        <div style="border-bottom:1px solid #ccc;" >
 
-        <p>Critique</p>
-            <p> Ici le formulaire pour remplir la critique</p>
-            <form method="post">
-                {% csrf_token %}
-                    {{ form.as_p }}
+            <p style="padding-left: 5px">Vous êtes en train de poster une réponse à</p>
 
+            <section style="padding:10px; margin:20px 90px">
+                {# Ticket display #}
+                {% include 'users/includes/ticket_card.html' with ticket=ticket hide_response_button=True %}
+            </section>
+        </div>
+        <div>
+
+            <p style="padding-left: 5px">Critique</p>
+
+            <section>
+                <form method="post" style="padding: 20px">
+                    {% csrf_token %}
+                    <p>Titre</p> {{ form.headline }}
+                    <br>
+                    <p>Note</p> {{ form.rating }}
+                    {% include 'users/includes/likert_rating_display.html' with rating=review.rating %}
+                    <br>
+                    <p>Commentaire</p> {{ form.body }}
                     <button type="submit" class="btn btn-primary">Envoyer</button>
-            </form>
+                </form>
+            </section>
+        </div>
     </div>
-
-
 {% endblock %}

@@ -20,13 +20,14 @@
         {{ form.image }}
     </Section>
 
-    <Section style="border:1px solid #ccc; padding:10px; margin-bottom: 10px">
+    <Section style="border:1px solid #ccc; padding:10px; margin-bottom: 10px">*
         <h3>Critique</h3>
         {{ form.headline.label_tag }}
         {{ form.headline }}
         <br>
         {{ form.rating.label_tag }}
         {{ form.rating }}
+        {% include 'users/includes/likert_rating_display.html' with rating=review.rating %}
         <br>
         {{ form.body.label_tag }}
         {{ form.body }}
