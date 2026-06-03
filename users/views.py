@@ -3,7 +3,7 @@ from typing import Any
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import (
     LoginView as DjangoLoginView,
     LogoutView as DjangoLogoutView,
