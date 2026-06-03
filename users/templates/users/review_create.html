@@ -10,27 +10,20 @@
     {% csrf_token %}
     <Section style="border:1px solid #ccc; padding:10px;">
         <h3>Livre / Article</h3>
-        {{ form.title.label_tag }}
-        {{ form.title }}
+        {{ form.title.label_tag }} {{ form.title }}
         <br>
-        {{ form.description.label_tag }}
-        {{ form.description }}
+        {{ form.description.label_tag }} {{ form.description }}
         <br>
-        {{ form.image.label_tag }}
-        {{ form.image }}
+        {{ form.image.label_tag }} {{ form.image }}
     </Section>
 
-    <Section style="border:1px solid #ccc; padding:10px; margin-bottom: 10px">*
+    <Section style="border:1px solid #ccc; padding:10px; margin-bottom: 10px">
         <h3>Critique</h3>
-        {{ form.headline.label_tag }}
-        {{ form.headline }}
+        {{ form.headline.label_tag }} {{ form.headline }}
         <br>
-        {{ form.rating.label_tag }}
-        {{ form.rating }}
-        {% include 'users/includes/likert_rating_display.html' with rating=review.rating %}
+        {{ form.rating.label_tag }} {{ form.rating }}
         <br>
-        {{ form.body.label_tag }}
-        {{ form.body }}
+        {{ form.body.label_tag }} {{ form.body }}
     </Section>
 
     <button type="submit" class="btn btn-primary">Envoyer</button>

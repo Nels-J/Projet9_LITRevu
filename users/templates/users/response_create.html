@@ -27,14 +27,13 @@
                 <form method="post" style="padding: 20px">
                     {% csrf_token %}
                     <p>Titre</p> {{ form.headline }}
-                    <br>
                     <p>Note</p> {{ form.rating }}
-                    {% include 'users/includes/likert_rating_display.html' with rating=review.rating %}
-                    <br>
                     <p>Commentaire</p> {{ form.body }}
                     <button type="submit" class="btn btn-primary">Envoyer</button>
                 </form>
             </section>
+
         </div>
     </div>
+
 {% endblock %}

@@ -10,8 +10,6 @@
     <small>{{ review.time_created|date:"H:i, j F Y"|lower }}</small>
     <h2>{{ review.headline }} — {{ review.rating }}/5</h2>
 
-    {% include 'users/includes/likert_rating_display.html' with rating=review.rating %}
-
     {% if review.body %}
         <p>{{ review.body }}</p>
     {% endif %}

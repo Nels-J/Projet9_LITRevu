@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
-from django.core.validators import MaxValueValidator
 from django.db import models
 
 
@@ -31,14 +30,26 @@ class Ticket(models.Model):
 
 class Review(models.Model):
     ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE, related_name="reviews")
+
+    class Rating(models.IntegerChoices):
+        ZERO = 0, "0"
+        ONE = 1, "1"
+        TWO = 2, "2"
+        THREE = 3, "3"
+        FOUR = 4, "4"
+        FIVE = 5, "5"
+
     rating = models.PositiveSmallIntegerField(
-            validators=[MaxValueValidator(5)]
-)
+            choices=Rating.choices,
+    )
+
     headline = models.CharField(max_length=128)
     body = models.CharField(max_length=8192, blank=True)
+
     user = models.ForeignKey(
             to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
     )
+
     time_created = models.DateTimeField(auto_now_add=True)
 
     class Meta:

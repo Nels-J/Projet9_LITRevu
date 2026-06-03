@@ -99,10 +99,12 @@ class CreateReviewAndTicketForm(forms.Form):
     # Champs pour la Review
     headline = forms.CharField(max_length=128, label="Titre")
     rating = forms.TypedChoiceField(
-        choices=[(i, i) for i in range(6)],
-        coerce=int,
-        label="Note"
+            choices=Review.Rating.choices,
+            coerce=int,
+            label="Note",
+            widget=forms.RadioSelect,
     )
+
     body = forms.CharField(widget=forms.Textarea, label="Commentaire", required=False)
 
     def save(self, user):
@@ -127,16 +129,18 @@ class CreateReviewAndTicketForm(forms.Form):
 
 
 class ReviewForm(forms.ModelForm):
-    # Le champ rating est défini manuellement pour limiter les choix à 0-5 et convertir en int.
-    rating = forms.TypedChoiceField(
-        choices=[(i, i) for i in range(6)],
-        coerce=int
-    )
 
     class Meta:
         model = Review
         fields = ['headline', 'body', 'rating']
+        widgets = {
+                'rating': forms.RadioSelect
+        }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['rating'].choices = Review.Rating.choices
 
 class TicketForm(forms.ModelForm):
     class Meta:
