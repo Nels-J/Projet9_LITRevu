@@ -52,12 +52,11 @@ class FluxView(LoginRequiredMixin, ListView):
         # Ajoute à la liste des utilisateurs ciblés, l'utilisateur connecté
         visible_user_ids = list(followed_user_ids) + [self.request.user.id]
 
-        # Sélectionne Tickets et Reviews correspondant aux utilisateurs ciblés.
+        # Sélectionne Tickets et Reviews des utilisateurs ciblés.
         tickets = Ticket.objects.filter(
             user_id__in=visible_user_ids
-        ).select_related('user')
+        ).select_related('user').prefetch_related('reviews')
 
-        # todo: a vérifier une fois les Review possible - non implémenté
         reviews = Review.objects.filter(
             user_id__in=visible_user_ids
         ).select_related('user', 'ticket', 'ticket__user')
