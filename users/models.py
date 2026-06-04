@@ -24,8 +24,16 @@ class Ticket(models.Model):
 
     @property
     def has_review(self):
-        # return self.reviews.exists()  # Vérifie si une review est associée à ce ticket
-       return Review.objects.filter(ticket=self).exists()  # Alternative plus explicite
+        """
+        Vérif. de l'existence de review lié au ticket.
+         - Si des reviews ont été préchargées (via prefetch_related), utilise le cache (réduire sql n+1).
+         - Sinon, éxécute la requête traditionnelle pour vérifier l'existence de review liée au ticket.
+         - Renvoi True si au moins une review existe, sinon False.
+        """
+        prefetched_reviews = getattr(self, '_prefetched_objects_cache', {}).get('reviews')
+        if prefetched_reviews is not None:
+            return bool(prefetched_reviews)
+        return self.reviews.exists()
 
 
 class Review(models.Model):
