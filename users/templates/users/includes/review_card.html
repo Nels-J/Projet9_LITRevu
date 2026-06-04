@@ -34,10 +34,6 @@
                 <a href="{% url 'review-update' review.pk %}" class="btn btn-primary">Modifier</a>
                 <a href="{% url 'review-delete' review.pk %}" class="btn btn-secondary">Supprimer</a>
             {% endif %}
-
-            {% if not review.ticket.has_review %}
-                <a href="{% url 'response-create' review.ticket.pk %}" class="btn btn-primary">Donner son avis</a>
-            {% endif %}
         </div>
     {% endwith %}
 
