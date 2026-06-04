@@ -1,9 +1,18 @@
 {# includes/review_actions.html #}
 
 <div>
-    {# Seul l'auteur de la critique pourra modifier/supprimer sa Review #}
-    {% if review.user == user %}
-        <a href="{% url 'review-update' review.pk %}" class="btn btn-primary">Modifier critique</a>
-        <a href="{% url 'review-delete' review.pk %}" class="btn btn-secondary">Supprimer critique</a>
-    {% endif %}
+    {% with ticket=review.ticket %} {# var évitant la répétition de review.ticket #}
+
+        {# Seul l'auteur de la critique pourra modifier/supprimer sa Review #}
+        {% if review.user == user %}
+            <a href="{% url 'review-update' review.pk %}" class="btn btn-primary">Modifier critique</a>
+            <a href="{% url 'review-delete' review.pk %}" class="btn btn-secondary">Supprimer critique</a>
+        {% endif %}
+
+        {# Conditions d'accès et d'affichage via le flag #}
+        {% if not ticket.has_review %}
+            <a href="{% url 'response-create' ticket.pk %}" class="btn btn-primary">Donner son avis</a>
+        {% endif %}
+
+    {% endwith %}
 </div>
