@@ -1,7 +1,7 @@
 {# abonnements.html #}
 {% extends 'users/base.html' %}
 
-{# Surcharge du contenu du head title de base.html #}
+{# Surcharge du Nom de l'application de base.html #}
 {% block title %} - Abonnements{% endblock %}
 
 {# Surcharge du contenu du bloc "content" de base.html #}
@@ -22,20 +22,20 @@
 
                 <table class="follow-table">
                     <tbody>
-                    <tr>
-                        {# Champ de saisie unique : `username` est converti par le Form côté serveur une fois validé #}
-                        <td class="cell-user">{{ form.username }}</td>
-                        <td class="cell-action">
-                            <button type="submit" class="btn btn-primary">Suivre</button>
-                        </td>
-                    </tr>
-                    {% if form.username.errors %}
-                    <tr>
-                        <td class="cell-user cell-user-errors" colspan="2">
-                            {{ form.username.errors }}
-                        </td>
-                    </tr>
-                    {% endif %}
+                        <tr>
+                            {# Champ de saisie du nom de l'utilisateur à suivre #}
+                            <td class="cell-user">{{ form.username }}</td>
+                            <td class="cell-action">
+                                <button type="submit" class="btn btn-primary">Envoyer</button>
+                            </td>
+                        </tr>
+                        {% if form.username.errors %}
+                            <tr>
+                                <td class="cell-user cell-user-errors" colspan="2">
+                                    {{ form.username.errors }}
+                                </td>
+                            </tr>
+                        {% endif %}
                     </tbody>
                 </table>
             </form>
@@ -53,7 +53,7 @@
                             <td class="cell-action">
                                 <form method="post" action="{% url 'unfollow' follow.id %}">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn btn-secondary">Se désabonner</button>
+                                    <button type="submit" class="btn btn-secondary">Désabonner</button>
                                 </form>
                             </td>
                         </tr>
@@ -67,6 +67,7 @@
             <hr>
 
             <h2 class="centered-title">Abonnés</h2>
+
             {% if followers %}
                 <table class="abonnement-table">
                     <tbody>
@@ -80,8 +81,9 @@
 
             {% else %}
                 <p class="empty-state">Aucun utilisateur ne vous suit pour le moment.</p>
-
             {% endif %}
+
         </section>
     </div>
+
 {% endblock %}
