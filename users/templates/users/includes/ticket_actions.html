@@ -7,7 +7,6 @@
         <a href="{% url 'ticket-delete' ticket.pk %}" class="btn btn-secondary">Supprimer</a>
     {% endif %}
 
-    {# Conditions d'accès et d'affichage via le flag #}
     {% if not ticket.has_review %}
         <a href="{% url 'response-create' ticket.pk %}" class="btn btn-primary">Créer une critique</a>
     {% endif %}
