@@ -4,22 +4,22 @@
 <html lang='fr'>
     <head>
         <meta charset='UTF-8'>
-
-        {# Title par défaut pour l'application users à surcharger dans les autres gabarits enfants #}
-        <title>LITRevu{% block title %} - UNDEFINED head title{% endblock %}</title>
+        {# Nom de l'application à compléter par une surcharge dans les gabarits enfants #}
+        <title>LITReview{% block title %} - Non défini dans gabarit enfant.{% endblock %}</title>
         <link rel='stylesheet' href="{% static 'css/style.css' %}">
     </head>
+
     <body>
         <header>
-            {# Message d'accueil de l'utilisateur connecté #}
+            {# Accueil personalisé d'un utilisateur connecté #}
             {% if user.is_authenticated %}
-                <span class="header-greeting">👋 Bonjour, {{ user.get_full_name|default:user.username }}</span>
+                <span class="header-greeting">👋 Bonjour {{ user.get_full_name|default:user.username }}</span>
             {% endif %}
 
-            {# Nom du site #}
-            <h1>LITRevu</h1>
+            {# Titre principal du site #}
+            <h1>LITReview</h1>
 
-            {# Seul un utilisateur connecté doit accéder à la navigation #}
+            {# Navigation protégé - accessible uniquement pour les utilisateurs connectés #}
             {% if user.is_authenticated %}
                 {% include 'users/includes/navbar.html' %}
             {% endif %}
@@ -28,13 +28,13 @@
 
         <main>
             {% block content %}
-                <!-- Si d'autres pages ont un block du meme nom, alors le contenu de celles-ci sera injecté ici pour le rendu html final -->
-                <p>UNDEFINED block content dans une des pages enfants.</p>
+                <!-- Si d'autres pages ont un block du meme nom, leur contenu sera injecté ici -->
+                <p>Le contenu block content est non defini (UNDEFINED) dans un gabarit enfants.</p> <!-- Contenu par défaut -->
             {% endblock %}
         </main>
 
         <footer>
-            <p>&lt; LITRevu - OC_student_project - 2026 &gt;</p>
+            <p>LITReview - OC_student_project - 2026</p>
         </footer>
 
     </body>
