@@ -170,10 +170,6 @@ class CreateResponseView(LoginRequiredMixin, CreateView):
     template_name = 'users/response_create.html'
     success_url = reverse_lazy('flux')
 
-    def __init__(self, **kwargs: Any):
-        super().__init__(kwargs)
-        self.ticket = None
-
     def dispatch(self, request, *args, **kwargs) -> HttpResponseBase:
         """ Prépare la vue avant routage GET/POST. """
         self.ticket = get_object_or_404(Ticket.objects.select_related('user'), pk=kwargs['pk'])  # fixme: warning ide ?
