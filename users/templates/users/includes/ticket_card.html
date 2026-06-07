@@ -1,5 +1,5 @@
 {# includes/ticket_card.html #}
-<article style="border:1px solid #ccc; padding:10px; margin:10px 0;">
+<article>
 
     {% if ticket.user == request.user.id %}
         <p>Vous avez publié un ticket</p>
@@ -17,5 +17,7 @@
     {% if ticket.image %}
         <img src="{{ ticket.image.url }}" alt="Image de la couverture du livre en lien avec la demande" style="max-width:200px;">
     {% endif %}
+
+    {% include 'users/includes/ticket_actions.html' with ticket=ticket %}
 
 </article>
