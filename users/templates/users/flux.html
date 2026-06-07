@@ -1,28 +1,32 @@
 {# flux.html #}
 {% extends 'users/base.html' %}
 
-{# Surcharge du contenu du head title de base.html #}
+{# Surcharge du Nom de l'application de base.html #}
 {% block title %} - Flux{% endblock %}
 
 {# Surcharge du contenu du bloc "content" de base.html #}
 {% block content %}
+
     <div>
         <a href="{% url 'ticket-create' %}" class="btn btn-primary">Demander une critique</a>
         <a href="{% url 'review-create' %}" class="btn btn-primary">Créer une critique</a>
     </div>
 
-    {% if feeds %}
-        {% for feed in feeds %}
+    {% if items %}
+        {% for item in items %}
+
             <article style="border:1px solid #ccc; padding:10px; margin:10px 0;">
-                {% if feed.ticket %}
-                    {# Review #}
-                    {% include 'users/includes/review_card.html' with review=feed %}
-                {% else %}
-                    {# Ticket #}
-                    {% include 'users/includes/ticket_card.html' with ticket=feed %}
-                    {% include 'users/includes/ticket_actions.html' with ticket=feed %}
+
+                {% if item.ticket %}  {# Review #}
+                    {% include 'users/includes/review_card.html' with review=item %}
+                {% else %}  {# Ticket #}
+                    {% include 'users/includes/ticket_card.html' with ticket=item %}
+
                 {% endif %}
+
             </article>
+
         {% endfor %}
     {% endif %}
+
 {% endblock %}

@@ -41,7 +41,7 @@ class RegisterView(CreateView):
 
 class FluxView(LoginRequiredMixin, ListView):
     template_name = 'users/flux.html'
-    context_object_name = 'feeds'
+    context_object_name = 'items'  # Renomme le contexte pour le template (au lieu de 'object_list')
 
     def get_queryset(self):
         # Liste les IDs des utilisateurs suivis par l'utilisateur connecté
