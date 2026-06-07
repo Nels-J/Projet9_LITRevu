@@ -9,24 +9,24 @@
 
     <h2>Vos posts</h2>
 
-    {% if posts %}
-        {% for post in posts %}
+    {% if items %}  {# Si PostView renvoi des tickets|reviews de l'utilisateur (alias 'items') #}
+
+        {% for item in items %}
+
             <article style="border:1px solid #ccc; padding:10px; margin:10px 0;">
 
-                {% if post.ticket %}
-                    {# Review #}
-                    {% include 'users/includes/review_card.html' with review=post %}
-                    {% include 'users/includes/review_actions.html' with review=post %}
+                {% if item.ticket %}  {# Review #}
+                    {% include 'users/includes/review_card.html' with review=item %}
 
-                {% else %}
-                    {# Ticket #}
-                    {% include 'users/includes/ticket_card.html' with ticket=post %}
-                    {% include 'users/includes/ticket_actions.html' with ticket=post %}
+                {% else %}  {# Ticket #}
+                    {% include 'users/includes/ticket_card.html' with ticket=item %}
                 {% endif %}
 
             </article>
+
         {% endfor %}
-    {% else %}
+
+    {% else %}  {# Si PostView ne renvoi aucun ticket|review de l'utilisateur #}
         <p>Vous n'avez pas encore publié de demande de critique, ni de critique. </p>
     {% endif %}
 

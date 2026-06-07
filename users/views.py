@@ -71,7 +71,7 @@ class FluxView(LoginRequiredMixin, ListView):
 
 class PostsView(LoginRequiredMixin, ListView):
     template_name = 'users/posts.html'
-    context_object_name = 'posts'  # Renomme le contexte pour accéder aux posts dans le template
+    context_object_name = 'items'  # Renomme le contexte pour le template (au lieu de 'object_list')
 
     def get_queryset(self):
         # QuerySet des tickets et reviews de l'utilisateur connecté
