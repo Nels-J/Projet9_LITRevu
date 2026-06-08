@@ -14,6 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.urls import path
 
 from .views import (
@@ -34,23 +35,22 @@ from .views import (
 )
 
 urlpatterns = [
-    path('', FluxView.as_view(), name='flux'),
-    path('register/', RegisterView.as_view(), name='register'),
-    path('login/', LoginView.as_view(), name='login'),
-    path('logout/', LogoutView.as_view(), name='logout'),
-
-    path('posts/', PostsView.as_view(), name='posts'),
-
-    path('review/create/', CreateReviewView.as_view(), name='review-create'),
-    path('review/<int:pk>/update', UpdateReviewView.as_view(), name='review-update'),
-    path('review/<int:pk>/delete/', DeleteReviewView.as_view(), name='review-delete'),
-
-    path('ticket/create/', CreateTicketView.as_view(), name='ticket-create'),
-    path('ticket/<int:pk>/review/', CreateResponseView.as_view(), name='response-create'),
-    path('ticket/<int:pk>/update/', UpdateTicketView.as_view(), name='ticket-update'),
-    path('ticket/<int:pk>/delete/', DeleteTicketView.as_view(), name='ticket-delete'),
-
-    path('abonnements/', AbonnementsView.as_view(), name='abonnements'),
-    path("abonnements/unfollow/<int:follow_id>/", UnfollowView.as_view(), name="unfollow"),
-
+    path("", FluxView.as_view(), name="flux"),
+    path("register/", RegisterView.as_view(), name="register"),
+    path("login/", LoginView.as_view(), name="login"),
+    path("logout/", LogoutView.as_view(), name="logout"),
+    path("posts/", PostsView.as_view(), name="posts"),
+    path("review/create/", CreateReviewView.as_view(), name="review-create"),
+    path("review/<int:pk>/update", UpdateReviewView.as_view(), name="review-update"),
+    path("review/<int:pk>/delete/", DeleteReviewView.as_view(), name="review-delete"),
+    path("ticket/create/", CreateTicketView.as_view(), name="ticket-create"),
+    path(
+        "ticket/<int:pk>/review/", CreateResponseView.as_view(), name="response-create"
+    ),
+    path("ticket/<int:pk>/update/", UpdateTicketView.as_view(), name="ticket-update"),
+    path("ticket/<int:pk>/delete/", DeleteTicketView.as_view(), name="ticket-delete"),
+    path("abonnements/", AbonnementsView.as_view(), name="abonnements"),
+    path(
+        "abonnements/unfollow/<int:follow_id>/", UnfollowView.as_view(), name="unfollow"
+    ),
 ]
