@@ -17,7 +17,33 @@ dependencies = [
 
 [tool.poetry.group.dev.dependencies]
 django-debug-toolbar = "^6.2.0"
+ruff = "^0.15.16"
+mypy = "^2.1.0"
+django-stubs = "^6.0.5"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+plugins = ["mypy_django_plugin.main"]
+
+[tool.django-stubs]
+django_settings_module = "LITRevu.settings"
+exclude = [
+    "^\\.venv/",
+    "^venv/",
+    "^static/",
+    "^media/",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py313"
+exclude = [
+    ".venv",
+    "venv",
+    "node_modules",
+    "static",
+    "media",
+]
