@@ -114,3 +114,6 @@ Docs/
 
 # Media files
 /media/
+
+# Static files
+/staticfiles/
