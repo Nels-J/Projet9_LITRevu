@@ -8,7 +8,7 @@ from django.contrib.auth.views import (
     LoginView as DjangoLoginView,
     LogoutView as DjangoLogoutView,
 )
-from django.db.models import QuerySet
+from django.db.models import QuerySet, Q
 from django.http import HttpResponse, HttpResponseBase
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
@@ -67,8 +67,16 @@ class FluxView(LoginRequiredMixin, ListView):
             .prefetch_related("reviews")
         )
 
-        reviews = Review.objects.filter(user_id__in=visible_user_ids).select_related(
-            "user", "ticket", "ticket__user"
+        reviews = Review.objects.filter(
+                # Review écrite par un utilisateur visible
+                Q(user_id__in=visible_user_ids)
+                |
+                # Review liée à un ticket appartenant à un utilisateur visible
+                Q(ticket__user_id__in=visible_user_ids)
+        ).select_related(
+                "user",             # auteur de la review
+                "ticket",           # ticket associé
+                "ticket__user"      # auteur du ticket associé (pour affichage dans flux)
         )
 
         # Fusion + tri du plus récent au plus ancien
