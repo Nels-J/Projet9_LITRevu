@@ -35,7 +35,12 @@
                                     aria-label="Aide pour {{ field.label }}"
                             >?
                             </button>
-                            <span class="help-tooltip">{{ field.help_text }}</span>
+                            <span
+                                    id="{{ field.id_for_label }}_helptext"
+                                    class="help-tooltip"
+                            >
+                                {{ field.help_text|safe }}
+                            </span>
                         {% endif %}
                     </div>
 
