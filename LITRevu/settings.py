@@ -28,7 +28,7 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
-ALLOWED_HOSTS : list[str] = []
+ALLOWED_HOSTS : list[str] = ["127.0.0.1", "localhost"]
 
 # Application definition
 INSTALLED_APPS = [
@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'debug_toolbar',
     'users'
 ]
 
@@ -49,7 +48,6 @@ LOGIN_REDIRECT_URL = 'flux'  # Redirection après connexion
 LOGOUT_REDIRECT_URL = 'login'  # Redirection après déconnexion
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -58,6 +56,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# Utilisation de la barre de débogage en mode DEBUG.
+if DEBUG:
+    INSTALLED_APPS += ["debug_toolbar",]
+    MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware",]
 
 ROOT_URLCONF = 'LITRevu.urls'
 
@@ -122,8 +125,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [
+        BASE_DIR / 'static',
+]
+
 
 APPEND_SLASH = True
 
