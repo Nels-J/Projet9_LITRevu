@@ -33,9 +33,9 @@ body {
 
 footer {
     text-align: center;
-    color: var(--c-mid);
+    color: var(--c-dark);
     padding: 1rem;
-    font-size: 0.9rem;
+    font-size: 0.7rem;
 }
 
 
