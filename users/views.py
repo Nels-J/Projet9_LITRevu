@@ -143,10 +143,11 @@ class UnfollowView(LoginRequiredMixin, DeleteView):
     pk_url_kwarg = "follow_id"
     success_url = reverse_lazy("abonnements")
 
-    def get_queryset(self) -> QuerySet:
+    def get_queryset(self) -> QuerySet[UserFollows]:
         """Restreint la suppression aux abonnements de l'utilisateur connecté.
         En filtrant le queryset avec self.request.user
         """
+        assert self.request.user.is_authenticated
         return UserFollows.objects.filter(user=self.request.user)
 
 
@@ -189,12 +190,14 @@ class CreateResponseView(LoginRequiredMixin, CreateView):
     form_class = ReviewForm
     template_name = "users/response_create.html"
     success_url = reverse_lazy("flux")
+    ticket: Ticket | None = None  # Attribut d'instance pour stocker le ticket parent chargé dans dispatch()
 
     def dispatch(self, request, *args, **kwargs) -> HttpResponseBase:
         """Prépare la vue avant routage GET/POST."""
         self.ticket = get_object_or_404(
-            Ticket.objects.select_related("user"), pk=kwargs["pk"]
-        )  # fixme: warning ide ?
+            Ticket.objects.select_related("user"),
+                pk=kwargs["pk"]
+        )
         return super().dispatch(
             request, *args, **kwargs
         )  # L'instance CreateView gère le routage GET/POST.
