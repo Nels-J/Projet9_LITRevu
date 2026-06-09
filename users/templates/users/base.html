@@ -5,7 +5,7 @@
     <head>
         <meta charset='UTF-8'>
         {# Nom de l'application à compléter par une surcharge dans les gabarits enfants #}
-        <title>LITReview{% block title %} - Non défini dans gabarit enfant.{% endblock %}</title>
+        <title>LITRevu{% block title %} - Non défini dans gabarit enfant.{% endblock %}</title>
         <link rel='stylesheet' href="{% static 'css/style.css' %}">
     </head>
 
@@ -29,7 +29,7 @@
         <main>
             {% block content %}
                 <!-- Si d'autres pages ont un block du meme nom, leur contenu sera injecté ici -->
-                <p>Le contenu block content est non defini (UNDEFINED) dans un gabarit enfants.</p> <!-- Contenu par défaut -->
+                <p>Le contenu block content est non défini (UNDEFINED) dans un gabarit enfants.</p> <!-- Contenu par défaut -->
             {% endblock %}
         </main>
 
