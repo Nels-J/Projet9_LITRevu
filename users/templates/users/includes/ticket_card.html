@@ -1,23 +1,20 @@
 {# includes/ticket_card.html #}
-<article>
 
-    {% if ticket.user == request.user %}
-        <p>Vous avez publié un ticket</p>
-    {% else %}
-        <p>{{ ticket.user.username }} a demandé une critique</p>
-    {% endif %}
+{% if ticket.user == request.user %}
+    <p>Vous avez publié un ticket</p>
+{% else %}
+    <p>{{ ticket.user.username }} a demandé une critique</p>
+{% endif %}
 
-    <p>{{ ticket.time_created|date:"H:i, j F Y"|lower }}</p>
-    <p>{{ ticket.title }}</p>
+<p>{{ ticket.time_created|date:"H:i, j F Y"|lower }}</p>
+<p>{{ ticket.title }}</p>
 
-    {% if ticket.description %}
-        <p>{{ ticket.description }}</p>
-    {% endif %}
+{% if ticket.description %}
+    <p>{{ ticket.description }}</p>
+{% endif %}
 
-    {% if ticket.image %}
-        <img src="{{ ticket.image.url }}" alt="Image de la couverture du livre en lien avec la demande" style="max-width:200px;">
-    {% endif %}
+{% if ticket.image %}
+    <img src="{{ ticket.image.url }}" alt="Image de la couverture du livre en lien avec la demande" style="max-width:200px;">
+{% endif %}
 
-    {% include 'users/includes/ticket_actions.html' with ticket=ticket %}
-
-</article>
+{% include 'users/includes/ticket_actions.html' with ticket=ticket %}
