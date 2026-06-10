@@ -7,7 +7,7 @@
         <a href="{% url 'ticket-delete' ticket.pk %}" class="btn btn-secondary">Supprimer Ticket</a>
     {% endif %}
 
-    {% if not ticket.has_review %}
+    {% if not hide_response_button and not ticket.has_review %}
         <a href="{% url 'response-create' ticket.pk %}" class="btn btn-primary">Créer une critique</a>
     {% endif %}
 </div>
