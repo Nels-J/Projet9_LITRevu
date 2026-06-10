@@ -29,12 +29,8 @@
             {% endif %}
         </div>
 
-        <div>
-            {% if review.user == user %}
-                <a href="{% url 'review-update' review.pk %}" class="btn btn-primary">Modifier</a>
-                <a href="{% url 'review-delete' review.pk %}" class="btn btn-secondary">Supprimer</a>
-            {% endif %}
-        </div>
+        {% include 'users/includes/review_actions.html' with review=review %}
+
     {% endwith %}
 
 </article>
