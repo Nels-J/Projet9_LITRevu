@@ -96,20 +96,31 @@ class PostsView(LoginRequiredMixin, ListView):
     )
 
     def get_queryset(self):
-        # QuerySet des tickets et reviews de l'utilisateur connecté
-        tickets = Ticket.objects.filter(user=self.request.user).prefetch_related("reviews")
-        tickets_reviews = Review.objects.filter(
-                Q(user=self.request.user)           # reviews écrites par l'utilisateur connecté.
-                |
-                Q(ticket__user=self.request.user)   # reviews écrites par XYZ sur les tickets de l'utilisateur connecté.
-        ).select_related("user", "ticket", "ticket__user")
+        # Tickets publiés par l'utilisateur connecté
+        tickets = (
+                          Ticket.objects.filter(user=self.request.user)
+                          .select_related("user")
+                          .prefetch_related("reviews")
+        )
 
-        # Combinaison tickets & reviews triés.
+        # Reviews :
+        # - écrites par l'utilisateur connecté
+        # - OU écrites par d'autres sur les tickets de l'utilisateur connecté
+        reviews = (
+                          Review.objects.filter(
+                                  Q(user=self.request.user)  # reviews écrites par l'utilisateur connecté.
+                                  |  # OR reviews écrites par XYZ sur les tickets de l'utilisateur connecté.
+                                  Q(ticket__user=self.request.user)
+                          )
+                          .select_related("user", "ticket", "ticket__user")
+                          .distinct()  # Évite les doublons si une review écrite par l'utilisateur connecté est aussi liée à un ticket de l'utilisateur connecté.
+        )
+
+        # Fusion + tri global du plus récent au plus ancien
         return sorted(
-            # chain combiner les deux QuerySet en une seule séquence itérable
-            chain(tickets, tickets_reviews),
-            key=lambda post: post.time_created,  # clé de tri.
-            reverse=True,  # inverse le tri (+ récent en premier)
+                chain(tickets, reviews),
+                key=lambda post: post.time_created,
+                reverse=True,
         )
 
 
