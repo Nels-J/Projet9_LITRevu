@@ -3,8 +3,8 @@
 <div>
     {# Seul l'auteur du billet pourra modifier/supprimer son propre billet #}
     {% if ticket.user == user %}
-        <a href="{% url 'ticket-update' ticket.pk %}" class="btn btn-primary">Modifier</a>
-        <a href="{% url 'ticket-delete' ticket.pk %}" class="btn btn-secondary">Supprimer</a>
+        <a href="{% url 'ticket-update' ticket.pk %}" class="btn btn-primary">Modifier Ticket</a>
+        <a href="{% url 'ticket-delete' ticket.pk %}" class="btn btn-secondary">Supprimer Ticket</a>
     {% endif %}
 
     {% if not ticket.has_review %}
