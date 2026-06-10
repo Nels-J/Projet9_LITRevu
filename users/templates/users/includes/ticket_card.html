@@ -1,7 +1,7 @@
 {# includes/ticket_card.html #}
 <article>
 
-    {% if ticket.user == request.user.id %}
+    {% if ticket.user == request.user %}
         <p>Vous avez publié un ticket</p>
     {% else %}
         <p>{{ ticket.user.username }} a demandé une critique</p>
