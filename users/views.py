@@ -2,6 +2,7 @@ from itertools import chain
 from typing import Any
 
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import (
@@ -10,7 +11,7 @@ from django.contrib.auth.views import (
 )
 from django.db.models import QuerySet, Q
 from django.http import HttpResponse, HttpResponseBase
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DeleteView, UpdateView, FormView
 
@@ -95,10 +96,12 @@ class PostsView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         # QuerySet des tickets et reviews de l'utilisateur connecté
-        tickets = Ticket.objects.filter(user=self.request.user)
-        tickets_reviews = Review.objects.filter(user=self.request.user).select_related(
-            "ticket"
-        )
+        tickets = Ticket.objects.filter(user=self.request.user).prefetch_related("reviews")
+        tickets_reviews = Review.objects.filter(
+                Q(user=self.request.user)           # reviews écrites par l'utilisateur connecté.
+                |
+                Q(ticket__user=self.request.user)   # reviews écrites par XYZ sur les tickets de l'utilisateur connecté.
+        ).select_related("user", "ticket", "ticket__user")
 
         # Combinaison tickets & reviews triés.
         return sorted(
@@ -206,6 +209,15 @@ class CreateResponseView(LoginRequiredMixin, CreateView):
             Ticket.objects.select_related("user"),
                 pk=kwargs["pk"]
         )
+
+        # Une seule review autorisée par ticket.
+        if Review.objects.filter(ticket=self.ticket).exists():
+            messages.warning(
+                request,
+                "Ce ticket a déjà une critique, vous ne pouvez pas en ajouter une nouvelle.",
+            )
+            return redirect("flux")
+
         return super().dispatch(
             request, *args, **kwargs
         )  # L'instance CreateView gère le routage GET/POST.

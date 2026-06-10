@@ -68,13 +68,17 @@ class Review(models.Model):
     class Meta:
         ordering = ["-time_created"]
         constraints = [
+            # Garantir l'unicité : un ticket ne peut avoir qu'une seule et unique review.
             models.UniqueConstraint(
-                fields=["user", "ticket"],
-                name="unique_user_review_per_ticket",
+                fields=["ticket"],
+                name="unique_review_per_ticket",
             ),
-            # Condition pour renforcer l'intégrité niveau DB en sus de PositiveSmallIntegerField niveau champ.
+            # Renforcer l'intégrité niveau DB en sus de PositiveSmallIntegerField niveau champ.
             models.CheckConstraint(
-                condition=models.Q(rating__gte=0, rating__lte=5),
+                condition=models.Q(
+                        rating__gte=0,
+                        rating__lte=5
+                ),
                 name="rating_between_0_and_5",
             ),
         ]
