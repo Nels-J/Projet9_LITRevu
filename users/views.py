@@ -9,6 +9,7 @@ from django.contrib.auth.views import (
     LoginView as DjangoLoginView,
     LogoutView as DjangoLogoutView,
 )
+from django.db import IntegrityError
 from django.db.models import QuerySet, Q
 from django.http import HttpResponse, HttpResponseBase
 from django.shortcuts import get_object_or_404, redirect
@@ -235,7 +236,15 @@ class CreateResponseView(LoginRequiredMixin, CreateView):
     def form_valid(self, form) -> HttpResponse:
         form.instance.user = self.request.user
         form.instance.ticket = self.ticket
-        return super().form_valid(form)
+        try:
+            return super().form_valid(form)
+        except IntegrityError:
+            # Gestion de la contrainte d'unicité au cas où deux utilisateurs tenteraient de répondre simultanément au même ticket.
+            messages.error(
+                self.request,
+                "Une critique existe déjà pour ce ticket. Votre critique n'a pas été enregistrée.",
+            )
+            return redirect("flux")
 
 
 class UpdateTicketView(LoginRequiredMixin, UpdateView):
