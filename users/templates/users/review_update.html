@@ -11,9 +11,15 @@
 
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
+
+        <fieldset>
+            <legend>Critique</legend>
+
+            {{ form.headline.label_tag }} {{ form.headline }}
+            {{ form.rating.label_tag }} {{ form.rating }}
+            {{ form.body.label_tag }} {{ form.body }}
+        </fieldset>
 
         <button type="submit" class="btn btn-primary">Envoyer</button>
     </form>
-
 {% endblock %}
