@@ -56,8 +56,7 @@ class Review(models.Model):
     )
 
     headline = models.CharField(max_length=128)
-    body = models.CharField(max_length=8192, blank=True)
-
+    body = models.TextField(max_length=8192, blank=True)
     user = models.ForeignKey(
         to=settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
