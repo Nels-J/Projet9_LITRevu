@@ -17,4 +17,14 @@
     <img src="{{ ticket.image.url }}" alt="Image de la couverture du livre en lien avec la demande" style="max-width:200px;">
 {% endif %}
 
-{% include 'users/includes/ticket_actions.html' with ticket=ticket %}
+<div>
+    {# Seul l'auteur du billet pourra modifier/supprimer son propre billet #}
+    {% if ticket.user == user %}
+        <a href="{% url 'ticket-update' ticket.pk %}" class="btn btn-primary">Modifier Ticket</a>
+        <a href="{% url 'ticket-delete' ticket.pk %}" class="btn btn-secondary">Supprimer Ticket</a>
+    {% endif %}
+
+    {% if not ticket.has_review %}
+        <a href="{% url 'response-create' ticket.pk %}" class="btn btn-primary">Créer une critique</a>
+    {% endif %}
+</div>
