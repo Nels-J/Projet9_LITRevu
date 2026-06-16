@@ -17,15 +17,14 @@
 
             <article style="border:1px solid #ccc; padding:10px; margin:10px 0;">
 
-                {% if item.ticket %}  {# Review (et son Ticket) #}
-                    {% include 'users/includes/review_card.html' with review=item %}
-                {% else %}  {# Ticket seul #}
-                    {% include 'users/includes/ticket_card.html' with ticket=item %}
+                {% if item.ticket %}  {# Affichage d'une Review incluant son Ticket#}
+                    {% include 'users/includes/ticket.html' with ticket=item.ticket show_review=True %}
+                {% else %} {# Affichage d'un Ticket seul en masquant la Review liée #}
+                    {% include 'users/includes/ticket.html' with ticket=item show_review=False %}
                 {% endif %}
 
             </article>
 
         {% endfor %}
     {% endif %}
-
 {% endblock %}

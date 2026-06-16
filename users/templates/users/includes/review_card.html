@@ -1,39 +1,21 @@
 {# includes/review_card.html #}
 
-{% with ticket=review.ticket %} {# var évitant la répétition de review.ticket #}
-    {% if review.user == request.user %}
-        <p>Vous avez publié une critique</p>
-    {% else %}
-        <p>{{ review.user.username }} a publié une critique</p>
+{% if review.user == user %}
+    <p>Vous avez publié une critique</p>
+{% else %}
+    <p>{{ review.user.username }} a publié une critique</p>
+{% endif %}
+
+<p>{{ review.time_created|date:"H:i, j F Y"|lower }}</p>
+
+<p>{{ review.headline }}</p>
+<p>{{ review.body }}</p>
+<p>{{ review.rating }}</p>
+
+<div>
+    {# Seul l'auteur du billet pourra modifier/supprimer son propre billet #}
+    {% if review.user == user %}
+        <a href="{% url 'review-update' review.pk %}" class="btn btn-primary">Modifier Critique</a>
+        <a href="{% url 'review-delete' review.pk %}" class="btn btn-secondary">Supprimer Critique</a>
     {% endif %}
-
-    <small>{{ review.time_created|date:"H:i, j F Y"|lower }}</small>
-    <h2>{{ review.headline }} — {{ review.rating }}/5</h2>
-
-    {% if review.body %}
-        <p>{{ review.body }}</p>
-    {% endif %}
-
-    {# Ticket lié à la review #}
-    <div style="border:1px solid #aaa; padding:8px; margin:8px 0;">
-        {% if ticket.user == request.user %}
-            <p>Ticket - Vous</p>
-        {% else %}
-            <p>Ticket - {{ ticket.user.username }}</p>
-        {% endif %}
-        <p>{{ ticket.title }}</p>
-        {% if ticket.image %}
-        <img src="{{ ticket.image.url }}"
-               alt="Image actuelle"
-               width="200">
-        {% endif %}
-
-        {% include 'users/includes/ticket_actions.html' with ticket=ticket hide_response_button=True %}
-
-    </div>
-
-    {% include 'users/includes/review_actions.html' with review=review %}
-
-{% endwith %}
-
-
+</div>
