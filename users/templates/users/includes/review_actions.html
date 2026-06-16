@@ -1,9 +1,0 @@
-{# includes/review_actions.html #}
-
-<div>
-    {# Seul l'auteur de la critique pourra modifier/supprimer sa Review #}
-    {% if review.user == user %}
-        <a href="{% url 'review-update' review.pk %}" class="btn btn-primary">Modifier critique</a>
-        <a href="{% url 'review-delete' review.pk %}" class="btn btn-secondary">Supprimer critique</a>
-    {% endif %}
-</div>
