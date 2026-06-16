@@ -1,6 +1,6 @@
 {# includes/ticket_card.html #}
 
-{% if ticket.user == request.user %}
+{% if ticket.user == user %}
     <p>Vous avez publié un ticket</p>
 {% else %}
     <p>{{ ticket.user.username }} a demandé une critique</p>
