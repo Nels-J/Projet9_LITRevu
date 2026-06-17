@@ -1,14 +1,24 @@
-{# posts.html #}
+{# templates/users/posts.html #}
 {% extends 'users/base.html' %}
 
-{# Surcharge du contenu du head title de base.html #}
-{% block title %} - Vos posts{% endblock %}
+{% block title %} - Posts{% endblock %}
 
-{# Surcharge du contenu du bloc "content" de base.html #}
 {% block content %}
 
     <h2>Vos posts</h2>
 
+    {% comment %}
+        FR : Insertion du template 'article_list.html' pour afficher la liste des articles (tickets et critiques).
+        - Affiche un message si la liste est vide pour informer l'utilisateur.
+        - Sinon, afin de centraliser sur une seule page les publications de l'utilisateur connecté, on affiche: :
+            - la liste de ses articles (tickets et critiques),
+            - et les critiques d'autres utilisateurs en réponse à ses tickets.
+        EN - Insert the 'article_list.html' template to display the list of articles (tickets and reviews).
+        - Display a message if the list is empty to inform the user.
+        - Otherwise, in order to centralize on a single page the publications of the logged-in user, we display:
+            - the list of their articles (tickets and reviews),
+            - and the reviews of other users in response to their tickets
+    {% endcomment %}
     {% include 'users/includes/article_list.html' with empty_message="Vous n'avez encore rien publié." %}
 
 {% endblock %}
