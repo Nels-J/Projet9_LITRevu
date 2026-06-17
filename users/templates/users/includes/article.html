@@ -1,13 +1,14 @@
 {# users/includes/article.html #}
 
-{% comment %}
-    FR: Si l'élément reçu est un Ticket seul on inclut le template 'ticket_card.html' seulement.
-        Sinon on inclut également le template 'review_card.html'.
-    EN: If the received item is a Ticket only, we include the 'ticket_card.html' template only.
-        Otherwise, we also include the 'review_card.html' template.
-{% endcomment %}
+
 <article style="border:1px solid #ccc; padding:10px; margin:10px 0;">
 
+    {% comment %}
+        FR: Si l'élément reçu est un Ticket seul on inclut le template 'ticket_card.html' seulement.
+            Sinon on inclut également le template 'review_card.html'.
+        EN: If the received item is a Ticket only, we include the 'ticket_card.html' template only.
+            Otherwise, we also include the 'review_card.html' template.
+    {% endcomment %}
     {% if item.ticket %}
 
         {% include 'users/includes/ticket_card.html' with ticket=item.ticket %}
