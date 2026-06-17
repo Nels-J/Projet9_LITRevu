@@ -1,0 +1,17 @@
+{# users/includes/article_list.html #}
+
+{% comment %}
+    FR: Si 'items' n'est pas vide alors:
+        - on passe en revue chaque élément
+        - et on inclut le template 'article.html' pour chaque élément.
+    EN: If is not empty then:
+        - we loop through each item
+        - and include the 'article.html' template for each item.
+{% endcomment %}
+{% if items %}
+    {% for item in items %}
+        {% include 'users/includes/article.html' with item=item %}
+    {% endfor %}
+{% else %}
+    <p>{{ empty_message }}</p>
+{% endif %}

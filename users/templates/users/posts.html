@@ -9,23 +9,6 @@
 
     <h2>Vos posts</h2>
 
-    {% if items %}  {# Si PostView renvoi des tickets|reviews de l'utilisateur (alias 'items') #}
-        {% for item in items %}
-
-            <article style="border:1px solid #ccc; padding:10px; margin:10px 0;">
-
-                {% if item.ticket %}  {# Affichage d'une Review incluant son Ticket #}
-                    {% include 'users/includes/ticket.html' with ticket=item.ticket show_review=True %}
-                {% else %}  {# Affichage d'un Ticket seul en masquant la Review liée #}
-                    {% include 'users/includes/ticket.html' with ticket=item show_review=False %}
-                {% endif %}
-
-            </article>
-
-        {% endfor %}
-
-    {% else %}
-        <p>Vous n'avez encore rien publié. </p>
-    {% endif %}
+    {% include 'users/includes/article_list.html' with empty_message="Vous n'avez encore rien publié." %}
 
 {% endblock %}

@@ -1,0 +1,12 @@
+{# users/includes/article.html #}
+
+<article style="border:1px solid #ccc; padding:10px; margin:10px 0;">
+
+    {% if item.ticket %}
+        {% include 'users/includes/ticket_card.html' with ticket=item.ticket %}
+        {% include 'users/includes/review_card.html' with review=item %}
+    {% else %}
+        {% include 'users/includes/ticket_card.html' with ticket=item %}
+    {% endif %}
+
+</article>
