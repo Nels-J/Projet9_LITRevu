@@ -1,21 +1,38 @@
 {# includes/review_card.html #}
 
-{% if review.user == user %}
-    <p>Vous avez publié une critique</p>
-{% else %}
-    <p>{{ review.user.username }} a publié une critique</p>
-{% endif %}
+<div style="border:1px solid #ccc; padding:10px; margin:10px 0;">
 
-<p>{{ review.time_created|date:"H:i, j F Y"|lower }}</p>
-
-<p>{{ review.headline }}</p>
-<p>{{ review.body }}</p>
-<p>{{ review.rating }}</p>
-
-<div>
-    {# Seul l'auteur du billet pourra modifier/supprimer son propre billet #}
+    {% comment %}
+        FR : Gestion du message d'information sur l'auteur de la publication, selon si l'auteur est l'utilisateur connecté ou pas.
+        EN : Handling the information message about the author of the publication, depending on whether the author is the logged-in user or not.
+    {% endcomment %}
     {% if review.user == user %}
-        <a href="{% url 'review-update' review.pk %}" class="btn btn-primary">Modifier Critique</a>
-        <a href="{% url 'review-delete' review.pk %}" class="btn btn-secondary">Supprimer Critique</a>
+        <p>Vous avez publié une critique</p>
+    {% else %}
+        <p>{{ review.user.username }} a publié une critique</p>
     {% endif %}
+
+    {% comment %}
+        FR : On affiche les éléments utiles provenant du model Review.
+            - Date et heure de publication au format "H:i, j F Y" (ex: 14:30, 5 mars 2023).
+        EN : We display useful elements from the Review model.
+            - Date and time of publication in the format "H:i, j F Y" (e.g., 14:30, March 5, 2023).
+    {% endcomment %}
+    <p>{{ review.time_created|date:"H:i, j F Y"|lower }}</p>
+    <p>{{ review.headline }}</p>
+    <p>{{ review.body }}</p>
+    <p>{{ review.rating }}</p>
+
+    <div>
+
+        {% comment %}
+            FR : Si l'utilisateur connecté est l'auteur de la critique, on affiche les boutons "Modifier Critique" et "Supprimer Critique".
+            EN : If the logged-in user is the author of the review, we display the "Edit Review" and "Delete Review" buttons.
+        {%  endcomment %}
+        {% if review.user == user %}
+            <a href="{% url 'review-update' review.pk %}" class="btn btn-primary">Modifier Critique</a>
+            <a href="{% url 'review-delete' review.pk %}" class="btn btn-secondary">Supprimer Critique</a>
+        {% endif %}
+
+    </div>
 </div>
