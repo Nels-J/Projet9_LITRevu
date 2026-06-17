@@ -1,17 +1,26 @@
-{# flux.html #}
+{# templates/users/flux.html #}
+
 {% extends 'users/base.html' %}
 
-{# Surcharge du Nom de l'application de base.html #}
 {% block title %} - Flux{% endblock %}
 
-{# Surcharge du contenu du bloc "content" de base.html #}
 {% block content %}
 
+    {% comment %}
+        FR : Affichage des boutons pour créer un ticket ou une critique.
+        EN : Display buttons to create a ticket or a review.
+    {% endcomment %}
     <div>
         <a href="{% url 'ticket-create' %}" class="btn btn-primary">Demander une critique</a>
         <a href="{% url 'review-create' %}" class="btn btn-primary">Créer une critique</a>
     </div>
 
+    {% comment %}
+        FR : Insertion du template 'article_list.html' pour afficher la liste des articles (tickets et critiques).
+        - Affiche un message si la liste est vide pour informer l'utilisateur.
+        EN : Insert the 'article_list.html' template to display the list of articles (tickets and reviews).
+        - Display a message if the list is empty to inform the user.
+    {% endcomment %}
     {% include 'users/includes/article_list.html' with empty_message="Encore, rien à signaler par ici !" %}
 
 {% endblock %}
