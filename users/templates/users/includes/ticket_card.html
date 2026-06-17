@@ -17,7 +17,7 @@
         - Date and time of publication in the format "H:i, j F Y" (e.g., 14:30, March 5, 2023).
 {% endcomment %}
 <p>{{ ticket.time_created|date:"H:i, j F Y"|lower }}</p>
-<h2>{{ ticket.title }}</h2>
+<h3>{{ ticket.title }}</h3>
 
 {% comment %}
     FR : On affiche la description du ticket seulement si elle n'est pas vide.
@@ -33,7 +33,8 @@
 {% endcomment %}
 {% if ticket.image %}
     <img src="{{ ticket.image.url }}"
-         alt="Image de la couverture du livre en lien avec la demande"
+{#         alt="Image de la couverture du livre en lien avec la demande"#}
+         alt="Couverture du livre lié au ticket : {{ ticket.title }}"
          style="max-width:200px;"
     >
 {% endif %}
