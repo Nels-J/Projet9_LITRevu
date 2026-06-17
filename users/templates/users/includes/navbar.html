@@ -1,25 +1,43 @@
 {# navbar.html #}
 <nav>
     <ul>
+        {% comment %}
+            FR : Gestion dynamique de l'affichage de la navigation selon si l'utilisateur est connecté ou pas.
+            EN : Dynamic management of the navigation display depending on whether the user is logged in or not.
+        {% endcomment %}
         {% if user.is_authenticated %}
+
+            {% comment %}
+                FR : Surbrillance du lien actif de navigation par comparaison du nom de l'URL actuelle avec l'URL de chaque lien.
+                EN : Highlighting the active navigation link by comparing the current URL name with the URL of each link.
+            {% endcomment %}
             <li class="{% if request.resolver_match.url_name == 'flux' %}is-active{% endif %}">
                 <a href="{% url 'flux' %}">Flux</a>
             </li>
+
             <li class="{% if request.resolver_match.url_name == 'posts' %}is-active{% endif %}">
                 <a href="{% url 'posts' %}">Posts</a>
             </li>
+
             <li class="{% if request.resolver_match.url_name == 'abonnements' %}is-active{% endif %}">
                 <a href="{% url 'abonnements' %}">Abonnements</a>
             </li>
+
             <li>
                 <form method="post" action="{% url 'logout' %}" style="display: inline;">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-link nav-link">Se déconnecter</button>
                 </form>
             </li>
+
         {% else %}
+            {% comment %}
+                FR : Si l'utilisateur n'est pas connecté, on affiche les liens "Connexion" et "Inscription".
+                EN : If the user is not logged in, we display the "Login" and "Register" links.
+            {% endcomment %}
             <li><a href="{% url 'login' %}">Connexion</a></li>
             <li><a href="{% url 'register' %}">Inscription</a></li>
         {% endif %}
+
     </ul>
 </nav>
