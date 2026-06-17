@@ -17,7 +17,7 @@
         - Date and time of publication in the format "H:i, j F Y" (e.g., 14:30, March 5, 2023).
 {% endcomment %}
 <p>{{ ticket.time_created|date:"H:i, j F Y"|lower }}</p>
-<p>{{ ticket.title }}</p>
+<h2>{{ ticket.title }}</h2>
 
 {% comment %}
     FR : On affiche la description du ticket seulement si elle n'est pas vide.
