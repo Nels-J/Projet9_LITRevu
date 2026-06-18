@@ -16,8 +16,10 @@
     EN : We display useful elements from the Ticket model.
         - Date and time of publication in the format "H:i, j F Y" (e.g., 14:30, March 5, 2023).
 {% endcomment %}
-<p>{{ ticket.time_created|date:"H:i, j F Y"|lower }}</p>
-<h3>{{ ticket.title }}</h3>
+        <p>{{ ticket.time_created|date:"j F Y, H:i"|lower }}</p>
+    </div>
+
+    <h3>{{ ticket.title }}</h3>
 
 {% comment %}
     FR : On affiche la description du ticket seulement si elle n'est pas vide.

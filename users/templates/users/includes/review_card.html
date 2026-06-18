@@ -18,7 +18,7 @@
         EN : We display useful elements from the Review model.
             - Date and time of publication in the format "H:i, j F Y" (e.g., 14:30, March 5, 2023).
     {% endcomment %}
-    <p>{{ review.time_created|date:"H:i, j F Y"|lower }}</p>
+    <p>{{ review.time_created|date:"j F Y, H:i"|lower }}</p>
     <h4>{{ review.headline }}</h4>
     <p>{{ review.body }}</p>
     <p>{{ review.rating }}</p>
