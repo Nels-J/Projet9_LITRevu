@@ -1,16 +1,18 @@
 {# templates/users/includes/ticket_card.html #}
+<section class="ticket">
 
-{% comment %}
+    <div class="content-meta">
+        {% comment %}
     FR : Gestion du message d'information sur l'auteur de la publication, selon si l'auteur est l'utilisateur connecté ou pas.
     EN : Handling the information message about the author of the publication, depending on whether the author is the logged-in user or not.
 {% endcomment %}
-{% if ticket.user == user %}
-    <p>Vous avez publié un ticket</p>
-{% else %}
-    <p>{{ ticket.user.username }} a demandé une critique</p>
-{% endif %}
+        {% if ticket.user == user %}
+            <p>Vous avez publié un ticket</p>
+        {% else %}
+            <p>{{ ticket.user.username }} a demandé une critique</p>
+        {% endif %}
 
-{% comment %}
+        {% comment %}
     FR : On affiche les éléments utiles provenant du model Ticket.
         - Date et heure de publication au format "H:i, j F Y" (ex: 14:30, 5 mars 2023).
     EN : We display useful elements from the Ticket model.
@@ -21,38 +23,45 @@
 
     <h3>{{ ticket.title }}</h3>
 
-{% comment %}
+    <div class="ticket-body">
+
+        <div class="ticket-text">
+
+            {% comment %}
     FR : On affiche la description du ticket seulement si elle n'est pas vide.
     EN : We display the ticket description only if it is not empty.
 {% endcomment %}
-{% if ticket.description %}
-    <p>{{ ticket.description }}</p>
-{% endif %}
+            {% if ticket.description %}
+                <p>{{ ticket.description }}</p>
+            {% endif %}
 
-{% comment %}
+        </div>
+
+        {% comment %}
     FR : On affiche l'image de couverture du livre seulement si elle est présente.
     EN : We display the book cover image only if it is present.
 {% endcomment %}
-{% if ticket.image %}
-    <img src="{{ ticket.image.url }}"
-{#         alt="Image de la couverture du livre en lien avec la demande"#}
-         alt="Couverture du livre lié au ticket : {{ ticket.title }}"
-         style="max-width:200px;"
-    >
-{% endif %}
+        {% if ticket.image %}
+            <img class="ticket-cover"
+                 src="{{ ticket.image.url }}"
+                 alt="Couverture du livre lié au ticket : {{ ticket.title }}"
+            >
+        {% endif %}
 
-<div>
+    </div>
 
-    {% comment %}
+    <div class="ticket-actions">
+
+        {% comment %}
         FR : Affiche les boutons uniquement si l'utilisateur connecté est l'auteur du ticket.
         EN : Display the buttons only if the logged-in user is the author of the ticket.
     {% endcomment %}
-    {% if ticket.user == user %}
-        <a href="{% url 'ticket-update' ticket.pk %}" class="btn btn-primary">Modifier Ticket</a>
-        <a href="{% url 'ticket-delete' ticket.pk %}" class="btn btn-secondary">Supprimer Ticket</a>
-    {% endif %}
+        {% if ticket.user == user %}
+            <a href="{% url 'ticket-update' ticket.pk %}" class="btn btn-primary">Modifier Ticket</a>
+            <a href="{% url 'ticket-delete' ticket.pk %}" class="btn btn-danger">Supprimer Ticket</a>
+        {% endif %}
 
-    {% comment %}
+        {% comment %}
         FR : Affiche le bouton uniquement :
             - si l'utilisateur connecté n'est pas l'auteur du ticket
             - et aucune critique n'a encore été publiée sur ce ticket.
@@ -60,7 +69,10 @@
             - if the logged-in user is not the author of the ticket
             - and no review has been published for this ticket yet.
     {% endcomment %}
-    {% if not ticket.has_review %}
-        <a href="{% url 'response-create' ticket.pk %}" class="btn btn-primary">Créer une critique</a>
-    {% endif %}
-</div>
+        {% if not ticket.has_review %}
+            <a href="{% url 'response-create' ticket.pk %}" class="btn btn-primary">Créer une critique</a>
+        {% endif %}
+
+    </div>
+
+</section>

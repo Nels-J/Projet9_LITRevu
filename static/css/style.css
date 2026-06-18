@@ -1,12 +1,12 @@
 /* ===== Palette de couleurs => ex. var(--c-nomdelacouleur-light ===== */
 :root {
-    --c-dark: #2c2c2c;                          /* texte, titres, btn primaire      */
-    --c-mid: #7a6f5e;                           /* bordures, labels, btn secondaire */
-    --c-light: #f5f0e8;                         /* fond général                     */
-    --c-paper: #ede8dc;                         /* header, panneaux, fond inputs    */
-    --c-danger: red;                             /* boutons de suppression           */
-    --c-error: #8b2020;                         /* erreurs uniquement               */
-    --c-border-light: rgba(122, 111, 94, 0.2);  /* bordures discrètes               */
+    --c-dark: #2c2c2c; /* texte, titres, btn primaire      */
+    --c-mid: #7a6f5e; /* bordures, labels, btn secondaire */
+    --c-light: #f5f0e8; /* fond général                     */
+    --c-paper: #ede8dc; /* header, panneaux, fond inputs    */
+    --c-danger: red; /* boutons de suppression           */
+    --c-error: #8b2020; /* erreurs uniquement               */
+    --c-border-light: rgba(122, 111, 94, 0.2); /* bordures discrètes               */
 }
 
 
@@ -320,7 +320,7 @@ header nav .btn-link:hover {
     background: var(--c-light);
 }
 
-.btn-primary, .btn-danger{
+.btn-primary, .btn-danger {
     background: var(--c-dark);
     border-color: var(--c-dark);
     color: var(--c-light);
@@ -441,4 +441,111 @@ header nav .btn-link:hover {
 .empty-state {
     color: var(--c-mid);
     font-style: italic;
+}
+
+
+/* ===== FLUX ===== */
+
+h2 {
+    text-align: center;
+}
+
+.feed-item {
+    background: var(--c-paper);
+    border: 1px solid var(--c-border-light);
+    border-radius: 3px;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+}
+
+.feed-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+
+/* ===== TICKET ===== */
+
+.ticket {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.content-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+
+    color: var(--c-mid);
+    font-size: 0.9rem;
+}
+
+.content-meta p {
+    margin: 0;
+}
+
+.ticket h3 {
+    margin: 0;
+}
+
+.ticket-body {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.ticket-text {
+    flex: 1;
+}
+
+.ticket-cover {
+    width: 140px;
+    border-radius: 3px;
+    border: 1px solid var(--c-border-light);
+}
+
+.ticket-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+
+/* ===== REVIEW ===== */
+
+.review {
+    margin-top: 1rem;
+    padding: 1.5rem;
+    border: 1px solid var(--c-border-light);
+    border-radius: 3px;
+}
+
+.review-rating {
+    font-weight: 700;
+    color: var(--c-mid);
+}
+
+.review-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+
+    .ticket-body {
+        flex-direction: column;
+    }
+
+    .ticket-cover {
+        width: 180px;
+    }
+
+    .content-meta {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
 }
