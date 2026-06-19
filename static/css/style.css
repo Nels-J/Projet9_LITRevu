@@ -335,6 +335,7 @@ header nav .btn-link:hover {
     background: var(--c-danger);
 }
 
+
 /* ===== ABONNEMENTS page ===== */
 .abonnements-page {
     max-width: 1400px;
@@ -492,13 +493,14 @@ h2 {
 }
 
 .ticket-body {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
     gap: 1.5rem;
-    align-items: flex-start;
+    align-items: start;
 }
 
 .ticket-text {
-    flex: 1;
+    min-width: 0;  /* éviter les débordements qd texte trop longs */
 }
 
 .ticket-cover {
@@ -569,7 +571,17 @@ h2 {
 @media (max-width: 768px) {
 
     .ticket-body {
-        flex-direction: column;
+        grid-template-columns: 1fr;
+        justify-items: center; /* centre image + bloc texte */
+        text-align: center;
+    }
+
+    .ticket-text {
+        width: 100%;
+    }
+
+    .ticket-actions {
+        justify-content: center;
     }
 
     .content-meta {
