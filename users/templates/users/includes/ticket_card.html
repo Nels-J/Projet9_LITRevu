@@ -41,12 +41,25 @@
     FR : On affiche l'image de couverture du livre seulement si elle est présente.
     EN : We display the book cover image only if it is present.
 {% endcomment %}
-        {% if ticket.image %}
-            <img class="ticket-cover"
-                 src="{{ ticket.image.url }}"
-                 alt="Couverture du livre lié au ticket : {{ ticket.title }}"
-            >
-        {% endif %}
+        <div class="ticket-image-container">
+            {% if ticket.image %}
+                <img class="ticket-cover"
+                     src="{{ ticket.image.url }}"
+                     alt="Image de la couverture du livre lié au ticket : {{ ticket.title }}"
+                >
+            {% else %}
+                <div
+                        class="ticket-cover ticket-cover--generated"
+                        aria-label="Aucune image disponible pour ce ticket"
+                >
+                    <div class="ticket-cover__content">
+                        <span class="ticket-cover__placeholder">
+                            Aucune couverture disponible
+                        </span>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
 
     </div>
 

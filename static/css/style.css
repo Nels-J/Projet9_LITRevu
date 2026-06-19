@@ -510,6 +510,24 @@ h2 {
     flex-shrink: 0;
 }
 
+.ticket-cover--generated {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 250px;
+    background: #f3f4f6;
+    border: 2px dashed #d1d5db;
+    border-radius: 2px;
+    padding: 1rem;
+    text-align: center;
+}
+
+.ticket-cover__placeholder {
+    color: #6b7280;
+    font-size: 0.95rem;
+    font-style: italic;
+}
+
 .ticket-actions {
     display: flex;
     gap: 0.5rem;
