@@ -502,9 +502,12 @@ h2 {
 }
 
 .ticket-cover {
-    width: 140px;
-    border-radius: 3px;
+    width: clamp(160px, 14vw, 320px); /* min 160px, idéal 14% viewport, max 320px */
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: 2px;
     border: 1px solid var(--c-border-light);
+    flex-shrink: 0;
 }
 
 .ticket-actions {
@@ -549,10 +552,6 @@ h2 {
 
     .ticket-body {
         flex-direction: column;
-    }
-
-    .ticket-cover {
-        width: 180px;
     }
 
     .content-meta {
