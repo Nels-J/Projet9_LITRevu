@@ -524,8 +524,19 @@ h2 {
 }
 
 .review-rating {
-    font-weight: 700;
-    color: var(--c-mid);
+    display: flex;
+    gap: 0.1rem;
+    margin: 0.25rem 0;
+}
+
+.star {
+    font-size: 1.4rem;
+    color: var(--c-border-light); /* étoile vide : gris discret */
+    line-height: 1;
+}
+
+.star--filled {
+    color: #c8922a; /* étoile pleine : doré chaud, cohérent avec la palette beige */
 }
 
 .review-actions {
