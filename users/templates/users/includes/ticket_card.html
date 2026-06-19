@@ -3,9 +3,9 @@
 
     <div class="content-meta">
         {% comment %}
-    FR : Gestion du message d'information sur l'auteur de la publication, selon si l'auteur est l'utilisateur connecté ou pas.
-    EN : Handling the information message about the author of the publication, depending on whether the author is the logged-in user or not.
-{% endcomment %}
+            FR : Gestion du message d'information sur l'auteur de la publication, selon si l'auteur est l'utilisateur connecté ou pas.
+            EN : Handling the information message about the author of the publication, depending on whether the author is the logged-in user or not.
+        {% endcomment %}
         {% if ticket.user == user %}
             <p>Vous avez publié un ticket</p>
         {% else %}
@@ -13,11 +13,11 @@
         {% endif %}
 
         {% comment %}
-    FR : On affiche les éléments utiles provenant du model Ticket.
-        - Date et heure de publication au format "H:i, j F Y" (ex: 14:30, 5 mars 2023).
-    EN : We display useful elements from the Ticket model.
-        - Date and time of publication in the format "H:i, j F Y" (e.g., 14:30, March 5, 2023).
-{% endcomment %}
+            FR : On affiche les éléments utiles provenant du model Ticket.
+                - Date et heure de publication au format "H:i, j F Y" (ex: 14:30, 5 mars 2023).
+            EN : We display useful elements from the Ticket model.
+                - Date and time of publication in the format "H:i, j F Y" (e.g., 14:30, March 5, 2023).
+        {% endcomment %}
         <p>{{ ticket.time_created|date:"j F Y, H:i"|lower }}</p>
     </div>
 
@@ -28,9 +28,9 @@
         <div class="ticket-text">
 
             {% comment %}
-    FR : On affiche la description du ticket seulement si elle n'est pas vide.
-    EN : We display the ticket description only if it is not empty.
-{% endcomment %}
+                FR : On affiche la description du ticket seulement si elle n'est pas vide.
+                EN : We display the ticket description only if it is not empty.
+            {% endcomment %}
             {% if ticket.description %}
                 <p>{{ ticket.description }}</p>
             {% endif %}
@@ -38,9 +38,9 @@
         </div>
 
         {% comment %}
-    FR : On affiche l'image de couverture du livre seulement si elle est présente.
-    EN : We display the book cover image only if it is present.
-{% endcomment %}
+            FR : On affiche soit la couverture du livre soit un message d'information si aucune image n'est disponible.
+            EN : We display either the book cover or an information message if no image is available.
+        {% endcomment %}
         <div class="ticket-image-container">
             {% if ticket.image %}
                 <img class="ticket-cover"
@@ -66,22 +66,22 @@
     <div class="ticket-actions">
 
         {% comment %}
-        FR : Affiche les boutons uniquement si l'utilisateur connecté est l'auteur du ticket.
-        EN : Display the buttons only if the logged-in user is the author of the ticket.
-    {% endcomment %}
+            FR : Affiche les boutons uniquement si l'utilisateur connecté est l'auteur du ticket.
+            EN : Display the buttons only if the logged-in user is the author of the ticket.
+        {% endcomment %}
         {% if ticket.user == user %}
             <a href="{% url 'ticket-update' ticket.pk %}" class="btn btn-primary">Modifier Ticket</a>
             <a href="{% url 'ticket-delete' ticket.pk %}" class="btn btn-danger">Supprimer Ticket</a>
         {% endif %}
 
         {% comment %}
-        FR : Affiche le bouton uniquement :
-            - si l'utilisateur connecté n'est pas l'auteur du ticket
-            - et aucune critique n'a encore été publiée sur ce ticket.
-        EN : Display the button only:
-            - if the logged-in user is not the author of the ticket
-            - and no review has been published for this ticket yet.
-    {% endcomment %}
+            FR : Affiche le bouton uniquement :
+                - si l'utilisateur connecté n'est pas l'auteur du ticket
+                - et aucune critique n'a encore été publiée sur ce ticket.
+            EN : Display the button only:
+                - if the logged-in user is not the author of the ticket
+                - and no review has been published for this ticket yet.
+        {% endcomment %}
         {% if not ticket.has_review %}
             <a href="{% url 'response-create' ticket.pk %}" class="btn btn-primary">Créer une critique</a>
         {% endif %}
