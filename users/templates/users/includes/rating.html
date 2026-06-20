@@ -1,0 +1,7 @@
+{# templates/users/includes/rating.html #}
+
+<p class="review-rating" aria-label="{{ rating }}">
+    {% for i in "12345" %}
+        <span class="star {% if forloop.counter <= rating %}star--filled{% endif %}">★</span>
+    {% endfor %}
+</p>

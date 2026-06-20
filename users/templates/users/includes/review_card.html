@@ -26,12 +26,7 @@
 
     <h4>{{ review.headline }}</h4>
 
-    {#    <p class="review-rating">{{ review.rating }}/5</p>#}
-    <p class="review-rating" aria-label="{{ review.rating }}">
-        {% for i in "12345" %}
-            <span class="star {% if forloop.counter <= review.rating %}star--filled{% endif %}">★</span>
-        {% endfor %}
-    </p>
+    {%  include 'users/includes/rating.html' with rating=review.rating %}
 
     <p>{{ review.body }}</p>
 
