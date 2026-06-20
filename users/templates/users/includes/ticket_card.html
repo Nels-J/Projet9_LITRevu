@@ -76,11 +76,13 @@
 
         {% comment %}
             FR : Affiche le bouton uniquement :
-                - si l'utilisateur connecté n'est pas l'auteur du ticket
-                - et aucune critique n'a encore été publiée sur ce ticket.
+                - si aucune critique n'a encore été publiée pour ce ticket.
+                - et si la variable hide_response_button n'est pas définie à True
+                 comme dans le template response_create.html.
             EN : Display the button only:
-                - if the logged-in user is not the author of the ticket
-                - and no review has been published for this ticket yet.
+                - if no review has been published for this ticket yet.
+                - and if the variable hide_response_button is not set to True
+                 as in the response_create.html template.
         {% endcomment %}
         {% if not ticket.has_review and not hide_response_button %}
             <a href="{% url 'response-create' ticket.pk %}" class="btn btn-primary">Créer une critique</a>
