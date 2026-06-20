@@ -26,7 +26,7 @@
 
     <h4>{{ review.headline }}</h4>
 
-    {%  include 'users/includes/rating.html' with rating=review.rating %}
+    {% include 'users/includes/rating.html' with rating=review.rating %}
 
     <p>{{ review.body }}</p>
 

@@ -589,3 +589,35 @@ h2 {
         gap: 0.25rem;
     }
 }
+
+/* ===== RATING FIELD  ===== */
+.form-row.rating-row {
+    margin-bottom: 0.9rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+}
+
+.rating-inline > div,
+.rating-inline ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.rating-inline label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin: 0;
+    font-weight: normal;
+}
+
+.rating-inline input[type="radio"] {
+    margin: 0;
+}

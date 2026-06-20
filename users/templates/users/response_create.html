@@ -26,9 +26,9 @@
         <fieldset>
             <legend>Critique</legend>
 
-            {{ form.headline.label_tag }} {{ form.headline }}
-            {{ form.rating.label_tag }} {{ form.rating }}
-            {{ form.body.label_tag }} {{ form.body }}
+            <p>{{ form.headline.label_tag }} {{ form.headline }}</p>
+            {% include 'users/includes/rating_review.html' with form=form %}
+            <p>{{ form.body.label_tag }} {{ form.body }}</p>
         </fieldset>
 
         <button type="submit" class="btn btn-primary">Envoyer</button>

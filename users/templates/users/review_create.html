@@ -25,7 +25,7 @@
             <legend>Critique</legend>
 
             <p>{{ form.headline.label_tag }} {{ form.headline }}</p>
-            <p>{{ form.rating.label_tag }} {{ form.rating }}</p>
+            {% include 'users/includes/rating_review.html' with form=form %}
             <p>{{ form.body.label_tag }} {{ form.body }}</p>
         </fieldset>
 
