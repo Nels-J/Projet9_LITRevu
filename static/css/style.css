@@ -590,6 +590,7 @@ h2 {
     }
 }
 
+
 /* ===== RATING FIELD  ===== */
 .form-row.rating-row {
     margin-bottom: 0.9rem;
@@ -620,4 +621,39 @@ h2 {
 
 .rating-inline input[type="radio"] {
     margin: 0;
+}
+
+
+/* ===== RESPONSE CREATE ===== */
+.response-context {
+    border: 1px solid var(--c-border-light);
+    padding: 0.625rem;
+    margin: 0.625rem 0;
+    background: var(--c-paper);
+}
+
+.response-context__lead {
+    margin: 0 0 0.5rem 0;
+    padding-left: 0.3125rem;
+}
+
+.response-context__ticket {
+    padding: 0.625rem;
+    margin: 1.25rem auto;
+    max-width: 900px;
+}
+
+.response-form {
+    padding: 1.25rem;
+}
+
+@media (max-width: 768px) {
+    .response-context__ticket {
+        margin: 1rem 0;
+        padding: 0.5rem;
+    }
+
+    .response-form {
+        padding: 0.75rem;
+    }
 }

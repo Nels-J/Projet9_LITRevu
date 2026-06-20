@@ -10,17 +10,17 @@
 
     <h2>Créer une critique</h2>
 
-    <div style="border:1px solid #ccc; padding:10px; margin:10px 0;">
+    <div class="response-context">
 
-        <p style="padding-left: 5px">Vous êtes en train de poster une réponse à</p>
+        <p class="response-context__lead">Vous êtes en train de poster une réponse à :</p>
 
-        <section style="padding:10px; margin:20px 90px">
+        <section class="response-context__ticket">
             {# Ticket display #}
             {% include 'users/includes/ticket_card.html' with ticket=ticket hide_response_button=True %}
         </section>
     </div>
 
-    <form method="post" style="padding: 20px">
+    <form method="post" class="response-form">
         {% csrf_token %}
 
         <fieldset>
