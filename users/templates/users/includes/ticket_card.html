@@ -82,7 +82,7 @@
                 - if the logged-in user is not the author of the ticket
                 - and no review has been published for this ticket yet.
         {% endcomment %}
-        {% if not ticket.has_review %}
+        {% if not ticket.has_review and not hide_response_button %}
             <a href="{% url 'response-create' ticket.pk %}" class="btn btn-primary">Créer une critique</a>
         {% endif %}
 
