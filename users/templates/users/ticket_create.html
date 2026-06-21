@@ -5,16 +5,42 @@
 {# Surcharge du contenu du head title de base.html #}
 {% block title %} - Créer un ticket{% endblock %}
 
-<h2>Créer un ticket</h2>
-
 {# Surcharge du contenu du bloc "content" de base.html #}
 {% block content %}
 
-    <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-        {{ form.as_p }}
+    <section class="ticket-form-page">
 
-        <button type="submit" class="btn btn-primary">Envoyer</button>
-    </form>
+        <div class="ticket-form-card">
 
+            <h2>Créer un ticket</h2>
+
+            <form method="post" enctype="multipart/form-data" class="ticket-form">
+                {% csrf_token %}
+
+                <div class="ticket-form__row">
+                    <label for="{{ form.title.id_for_label }}">Titre et auteur(s) du livre :</label>
+                    {{ form.title }}
+                    {{ form.title.errors }}
+                </div>
+
+                <div class="ticket-form__row">
+                    <label for="{{ form.description.id_for_label }}">Préciser les attentes en termes de critique - (facultatif)</label>
+                    {{ form.description }}
+                    {{ form.description.errors }}
+                </div>
+
+                <div class="ticket-form__row">
+                    <label for="{{ form.image.id_for_label }}">Ajouter l'image de la couverture du livre - (facultatif)</label>
+                    {{ form.image }}
+                    {{ form.image.errors }}
+                </div>
+
+                <div class="ticket-form__actions">
+                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                </div>
+
+            </form>
+
+        </div>
+    </section>
 {% endblock %}
